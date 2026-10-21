@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <style>/* Internal feed controls are not part of the public interface. */
 #mapSource,#refreshSheet,#dataState{display:none!important}
+@media (pointer: coarse) {
+  #map { touch-action: pan-y pinch-zoom; }
+}
 </style>
 <!--
 ===============================================================================
@@ -3143,7 +3146,12 @@ function chooseStickyNote(id,fromList=false){
 
 function initMap(){
   if(!window.L){$('mapEmpty').textContent=t('mapUnavailable');$('mapEmpty').hidden=false;$('fitMap').disabled=true;state.tileError=true;return}
-  state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:true,touchZoom:true,doubleClickZoom:true,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
+  state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:false,touchZoom:true,doubleClickZoom:true,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
+  // On touch-first devices, one-finger swipes should scroll the page, not drag the map.
+  // Two-finger pinch zoom, marker taps, and zoom buttons remain available.
+  if(window.matchMedia?.('(pointer: coarse)').matches){
+    state.map.dragging.disable();
+  }
   L.control.zoom({position:'bottomright'}).addTo(state.map);
   // Default: genuinely free, no-key OpenFreeMap vector basemap with Leaflet markers on top.
   // Do not silently retry the OSMF tile.openstreetmap.org server after a policy block.
@@ -3171,6 +3179,31 @@ function initMap(){
   state.map.on('zoomend moveend resize',scheduleDeclutter);
   state.map.on('dragstart',()=>state.viewTouched=true);
   state.map.on('click',()=>{if(state.selected){state.selected=null;scheduleDeclutter()}});
+  // Click-to-zoom: normal wheel scrolling passes through until a user clicks
+  // the map. A pointer exit, click outside, Escape, or lost window focus resets it.
+  // There are no overlays or visible prompts.
+  const mapElement=$('map');
+  const disableWheelZoom=()=>{
+    if(state.map?.scrollWheelZoom?.enabled())state.map.scrollWheelZoom.disable();
+  };
+  mapElement.addEventListener('click',event=>{
+    // Ignore touch-synthesized clicks, non-primary clicks, and zoom/control UI.
+    if(event.detail===0||event.button!==0||event.target.closest('.leaflet-control'))return;
+    if(!window.matchMedia?.('(pointer: coarse)').matches){
+      state.map.scrollWheelZoom.enable();
+    }
+  });
+  mapElement.addEventListener('mouseleave',disableWheelZoom);
+  document.addEventListener('pointerdown',event=>{
+    if(!mapElement.contains(event.target))disableWheelZoom();
+  },{passive:true});
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape')disableWheelZoom();
+  });
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)disableWheelZoom();
+  });
+  window.addEventListener('blur',disableWheelZoom);
   $('map').addEventListener('pointerdown',()=>state.viewTouched=true,{passive:true});
   $('map').addEventListener('keydown',()=>state.viewTouched=true);
   state.map.on('popupclose',e=>{if(state.selected===e.popup._source?.options.propertyId)state.selected=null;scheduleDeclutter()});
