@@ -6,6 +6,7 @@
 #mapSource,#refreshSheet,#dataState{display:none!important}
 @media (pointer: coarse) {
   #map { touch-action: pan-y pinch-zoom; }
+  #map.mobile-map-active { touch-action: none; }
 }
 </style>
 <!--
@@ -3147,8 +3148,8 @@ function chooseStickyNote(id,fromList=false){
 function initMap(){
   if(!window.L){$('mapEmpty').textContent=t('mapUnavailable');$('mapEmpty').hidden=false;$('fitMap').disabled=true;state.tileError=true;return}
   state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:false,touchZoom:true,doubleClickZoom:true,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
-  // On touch-first devices, one-finger swipes should scroll the page, not drag the map.
-  // Two-finger pinch zoom, marker taps, and zoom buttons remain available.
+  // Before the first map tap, a one-finger swipe scrolls the page.
+  // After tapping the map, one-finger drag pans the map until tapping outside.
   if(window.matchMedia?.('(pointer: coarse)').matches){
     state.map.dragging.disable();
   }
@@ -3183,22 +3184,35 @@ function initMap(){
   // the map. A pointer exit, click outside, Escape, or lost window focus resets it.
   // There are no overlays or visible prompts.
   const mapElement=$('map');
+  const coarsePointer=window.matchMedia?.('(pointer: coarse)');
   const disableWheelZoom=()=>{
     if(state.map?.scrollWheelZoom?.enabled())state.map.scrollWheelZoom.disable();
   };
+  const deactivateMobileMap=()=>{
+    if(!mapElement.classList.contains('mobile-map-active'))return;
+    mapElement.classList.remove('mobile-map-active');
+    state.map.dragging.disable();
+  };
   mapElement.addEventListener('click',event=>{
-    // Ignore touch-synthesized clicks, non-primary clicks, and zoom/control UI.
+    // A tap activates one-finger map panning; desktop click activates wheel zoom.
     if(event.detail===0||event.button!==0||event.target.closest('.leaflet-control'))return;
-    if(!window.matchMedia?.('(pointer: coarse)').matches){
+    if(coarsePointer?.matches){
+      mapElement.classList.add('mobile-map-active');
+      state.map.dragging.enable();
+    }else{
       state.map.scrollWheelZoom.enable();
     }
   });
+  // Mouse exit resets desktop wheel zoom; mobile stays active until touch outside.
   mapElement.addEventListener('mouseleave',disableWheelZoom);
   document.addEventListener('pointerdown',event=>{
-    if(!mapElement.contains(event.target))disableWheelZoom();
+    if(!mapElement.contains(event.target)){
+      disableWheelZoom();
+      if(event.pointerType==='touch'||event.pointerType==='pen'||coarsePointer?.matches)deactivateMobileMap();
+    }
   },{passive:true});
   document.addEventListener('keydown',event=>{
-    if(event.key==='Escape')disableWheelZoom();
+    if(event.key==='Escape'){disableWheelZoom();deactivateMobileMap();}
   });
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden)disableWheelZoom();
