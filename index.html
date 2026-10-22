@@ -2628,7 +2628,7 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
   touch-action: none !important;
 }
 #properties .map-shell .leaflet-bottom .leaflet-control-zoom {
-  transform: translateY(-150px) !important;
+  transform: translateY(0) !important;
   pointer-events: auto !important;
 }
 #properties .map-shell .leaflet-control-zoom a {
@@ -2997,6 +2997,20 @@ body.map-expanded > #mapShell.expanded {
   #mapShell.expanded .segments button { flex:1 1 auto !important; font-size:11px !important; padding:8px 6px !important; }
   #mapShell.expanded .map-actions { align-self:flex-end !important; }
   #mapShell.expanded .map-actions #fitMap { font-size:10px !important; }
+}
+</style>
+<style id="zoom-position-only-fix">
+/* Compact zoom controls, safely inside the map viewport. */
+#properties .map-shell .leaflet-bottom .leaflet-control-zoom,
+#mapShell.expanded .leaflet-bottom .leaflet-control-zoom {
+ transform:translateY(0) !important;
+ margin-bottom:34px !important;
+ margin-right:14px !important;
+}
+#properties .map-shell .leaflet-control-zoom a,
+#mapShell.expanded .leaflet-control-zoom a {
+ width:30px !important;height:30px !important;line-height:30px !important;
+ font-size:19px !important;
 }
 </style>
 </head>
