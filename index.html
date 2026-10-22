@@ -129,7 +129,7 @@ const DEFAULTS = {
   OfficeAddress: 'Office #1: House#2, Road#3, Block#J, Banasree, Rampura, Dhaka-1219. Office #2: 2nd Floor, Billal Hossain Super Market, Trimohoni Bazar, Dhaka-1214.',
   OfficeAddressBN: 'অফিস ১: বাড়ি ২, সড়ক ৩, ব্লক জে, বনশ্রী, রামপুরা, ঢাকা-১২১৯। অফিস ২: দ্বিতীয় তলা, বিল্লাল হোসেন সুপার মার্কেট, ত্রিমোহনী বাজার, ঢাকা-১২১৪।',
   // Intro biography — English
-  BioEnglish: 'Over 16 years of experience in the land and real estate sector in Dhaka. Specialized in land buying and selling, project development, and land document verification in Khilgaon, Banasree, Aftabnagar, and Demra. Years of practical experience, deep knowledge of the local market, and a commitment to honesty and transparency are the main foundations of this professional identity.',
+  BioEnglish: 'Over 16 years of experience in Dhaka’s land and real estate sector. Highly skilled in land buying and selling, project development, and land document verification across Khilgaon, Banasree, Aftabnagar, and Demra. Years of practical experience, a deep understanding of the local market, and a commitment to honesty and transparency form the foundation of professional identity.',
   // Intro biography — বাংলা
   BioBangla: 'ঢাকার ভূমি ও আবাসন খাতে ১৬ বছরেরও বেশি সময় ধরে কাজ করার অভিজ্ঞতা রয়েছে। খিলগাঁও, বনশ্রী, আফতাবনগর ও ডেমরা এলাকায় জমি ক্রয়-বিক্রয়, প্রকল্প উন্নয়ন এবং ভূমির দলিলপত্র যাচাইয়ে বিশেষ পারদর্শী। দীর্ঘদিনের বাস্তব অভিজ্ঞতা, স্থানীয় বাজার সম্পর্কে গভীর ধারণা এবং সততা ও স্বচ্ছতার সঙ্গে কাজ করার অঙ্গীকারই পেশাগত পরিচয়ের মূল ভিত্তি।',
 };
@@ -2721,6 +2721,284 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
 #languageWelcome .language-welcome-options button::after{position:static;width:5px;height:5px;flex-shrink:0}
 #languageWelcome .language-welcome-close{width:30px;height:30px;top:8px;right:8px;border-radius:8px}
 </style>
+
+<style id="property-map-layout-2026-fullscreen-portal">
+/* Preserve property pin/card styling when the map is portaled to BODY. */
+
+
+/* ================================================
+   PROPERTY MAP 2026 — AIRY FLOATING MAP INTERFACE
+   Visual changes only; live Apps Script code preserved.
+   ================================================ */
+#mapShell.expanded .map-shell:not(.expanded){position:relative;padding:0!important;border:0!important;border-radius:20px!important;background:#eaf1f7!important;box-shadow:0 16px 44px rgba(2,16,38,.19)!important;overflow:hidden}
+#mapShell.expanded .map-shell.expanded{padding:0!important;border:0!important;border-radius:0!important;background:#eaf1f7!important}
+#mapShell.expanded #map{height:clamp(470px,51vw,625px);width:100%;border:0!important;border-radius:inherit!important;background:#eaf1f7}
+#mapShell.expanded .map-shell:not(.expanded) #map{border-radius:20px!important}
+#mapShell.expanded .map-shell.expanded #map{height:auto!important;border-radius:0!important;min-height:0!important}
+#mapShell.expanded .map-toolbar{position:absolute!important;z-index:800;top:13px;left:14px;right:14px;display:flex;align-items:flex-start!important;justify-content:space-between;gap:10px;padding:0!important;background:none!important;pointer-events:none}
+#mapShell.expanded .map-toolbar>*{pointer-events:auto}
+#mapShell.expanded .segments{border:1px solid rgba(210,224,243,.8)!important;background:rgba(255,255,255,.95)!important;backdrop-filter:blur(18px);padding:4px!important;gap:2px;box-shadow:0 6px 20px rgba(13,37,73,.13);border-radius:12px!important}
+#mapShell.expanded .segments button{border-radius:9px!important;min-height:39px;padding:9px 13px!important;font-size:12px!important;font-weight:700!important;white-space:nowrap}
+#mapShell.expanded .segments button[aria-pressed=true]{background:#1755ad!important;color:#fff!important;box-shadow:0 4px 11px rgba(20,72,147,.23)}
+#mapShell.expanded .map-actions{gap:8px!important;display:flex;flex-wrap:nowrap}
+#mapShell.expanded .map-actions .btn{background:rgba(255,255,255,.97)!important;backdrop-filter:blur(18px);border:1px solid rgba(210,224,242,.7)!important;box-shadow:0 5px 17px rgba(13,42,79,.15)!important;color:#17426f!important;border-radius:11px!important;font-size:12px!important;font-weight:750;padding:10px 14px;min-height:46px}
+#mapShell.expanded .map-actions .btn:hover{background:#eef6ff!important;color:#134a91!important}
+#mapShell.expanded .map-footer{position:absolute;z-index:625;left:0;right:0;bottom:0;min-height:34px;background:linear-gradient(90deg,rgba(244,249,255,.96),rgba(244,249,255,.89))!important;backdrop-filter:blur(12px);margin:0!important;padding:7px 17px!important;border:0!important;color:#385574!important;font-size:11px!important;gap:12px;align-items:center}
+#mapShell.expanded .legend{gap:14px!important}
+#mapShell.expanded .map-footer-right{gap:8px}
+#mapShell.expanded .map-quick-list{position:absolute;z-index:630;left:13px;right:13px;bottom:38px;display:flex;gap:10px;padding:5px 3px 10px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#aec5dd transparent;-webkit-overflow-scrolling:touch;pointer-events:auto}
+#mapShell.expanded .map-quick-list[hidden]{display:none!important}
+#mapShell.expanded .map-quick-card{position:relative;display:flex;gap:9px;align-items:center;min-width:0;flex:0 0 clamp(160px,18.7%,235px);min-height:71px;padding:12px 11px;border:1px solid rgba(232,238,249,.8);border-radius:13px;background:rgba(255,255,255,.97);color:#17365b;text-align:left;box-shadow:0 5px 15px rgba(16,43,84,.14);font-family:inherit;scroll-snap-align:start;transition:transform .18s,background .18s,border-color .18s}
+#mapShell.expanded .map-quick-card:hover,#mapShell.expanded .map-quick-card.is-selected{transform:translateY(-2px);background:white;border-color:#5d95d9;box-shadow:0 6px 22px rgba(18,76,148,.20)}
+#mapShell.expanded .quick-status-dot{width:9px;height:9px;flex:none;border-radius:100%;background:#18a66a;box-shadow:0 0 0 4px #e1f8ed}
+#mapShell.expanded .map-quick-card.sold .quick-status-dot{background:#386be2;box-shadow:0 0 0 4px #eaf0ff}
+#mapShell.expanded .quick-card-copy{min-width:0;flex:1;display:grid;gap:4px}
+#mapShell.expanded .quick-card-copy strong{font-weight:800;color:#14375d;font-size:12px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mapShell.expanded .quick-card-copy small{font-size:11px;line-height:1.4;font-weight:550;color:#607994;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mapShell.expanded .quick-arrow{font-size:17px;color:#4b80c1;margin-left:auto;align-self:center}
+/* Sleek recognizable map pins; compact detail cards maximize simultaneous visibility. */
+#mapShell.expanded .property-icon{background:none!important;border:0!important;overflow:visible!important}
+#mapShell.expanded .property-icon .property-pin{left:1px!important;top:0!important;width:28px!important;height:28px!important;border-radius:11px 11px 11px 3px!important;transform:rotate(-45deg);border:2px solid white!important;background:#17a56c!important;box-shadow:0 3px 0 rgba(4,42,23,.10),0 5px 17px rgba(6,49,38,.35)!important;display:grid;place-items:center;color:white}
+#mapShell.expanded .property-icon.sold .property-pin{background:#3673e4!important;box-shadow:0 5px 17px rgba(14,52,133,.38)!important}
+#mapShell.expanded .property-icon .property-pin svg{width:15px;height:15px;transform:rotate(45deg)}
+#mapShell.expanded .property-icon .property-note{position:absolute!important;left:15px!important;bottom:46px!important;top:auto!important;right:auto!important;transform:translateX(-50%)!important;width:166px!important;min-height:0!important;padding:10px 12px!important;border:1px solid #c8e5d6!important;border-left:4px solid #1ba66d!important;border-radius:11px!important;background:rgba(255,255,255,.97)!important;color:#17446b!important;box-shadow:0 5px 16px rgba(14,39,71,.16)!important;overflow:visible;line-height:1.35!important;pointer-events:none}
+#mapShell.expanded .property-icon.sold .property-note{border-color:#b7cef5!important;border-left-color:#3673e4!important}
+#mapShell.expanded .property-icon .property-note:after{display:none!important}
+#mapShell.expanded .property-icon .note-title{display:block;color:#133c66;font-size:11.5px;font-weight:800;line-height:1.4;word-break:break-word}
+#mapShell.expanded .property-icon .note-size{display:block;margin-top:5px;padding-top:4px;border-top:1px solid #e6edf5;color:#137e55;font-weight:800;font-size:11px!important}
+#mapShell.expanded .property-icon.sold .note-size{color:#225ac8}
+#mapShell.expanded .property-icon .note-location{font-size:10px!important;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;color:#5c7189;margin-top:3px}
+#mapShell.expanded .property-icon .note-road{display:none;font-size:10px;margin-top:4px;color:#567089}
+#mapShell.expanded .property-icon.compact .property-note{width:140px!important;padding:8px 10px!important}
+#mapShell.expanded .property-icon.compact .note-title{font-size:11px!important}
+#mapShell.expanded .property-icon.compact .note-size{margin-top:3px!important;padding-top:3px!important}
+#mapShell.expanded .property-icon.selected .property-note{width:186px!important;border-width:1px!important;border-left-width:4px!important;background:#fff!important;box-shadow:0 10px 26px rgba(13,40,81,.29)!important;z-index:10}
+#mapShell.expanded .property-icon.selected .note-road{display:block!important}
+#mapShell.expanded .property-icon.note-top .property-note{top:auto!important;bottom:46px!important;left:15px!important;right:auto!important;transform:translateX(-50%)!important}
+#mapShell.expanded .property-icon.note-right .property-note{top:-3px!important;bottom:auto!important;left:43px!important;right:auto!important;transform:none!important}
+#mapShell.expanded .property-icon.note-left .property-note{top:-3px!important;bottom:auto!important;left:auto!important;right:43px!important;transform:none!important}
+#mapShell.expanded .property-icon.note-bottom .property-note{top:43px!important;bottom:auto!important;left:15px!important;right:auto!important;transform:translateX(-50%)!important}
+#mapShell.expanded .property-icon.hidden-note .property-note{visibility:hidden!important;pointer-events:none!important}
+#mapShell.expanded .property-icon:hover .property-note,#mapShell.expanded .property-icon:focus .property-note{visibility:visible!important}
+#mapShell.expanded .leaflet-bottom .leaflet-control-zoom{transform:translateY(-116px);border:1px solid rgba(226,235,246,.9)!important;border-radius:12px!important}
+#mapShell.expanded .leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important}
+#mapShell.expanded .leaflet-control-attribution{font-size:9px!important}
+/* The previous max 305px layout left a huge unused blank strip. */
+#mapShell.expanded .property-list{margin-top:15px!important;border:1px solid rgba(190,219,255,.18)!important;border-radius:16px!important;overflow:hidden;background:rgba(240,247,255,.06)!important;box-shadow:none!important}
+#mapShell.expanded .property-list>summary{padding:16px 20px!important;font-size:17px!important}
+#mapShell.expanded .property-list .listing-grid{display:grid!important;width:100%!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:13px!important;padding:15px!important;margin:0!important;justify-content:stretch!important;align-items:stretch!important}
+#mapShell.expanded .property-list .listing{width:100%!important;max-width:none!important;min-width:0!important;display:flex!important;flex-direction:column!important;height:100%!important;padding:17px 18px!important;background:#fff!important;border:1px solid rgba(224,233,244,.78)!important;border-radius:12px!important;box-shadow:0 5px 15px rgba(2,18,46,.05)!important}
+#mapShell.expanded .property-list .listing .badge{font-size:10px!important;padding:4px 9px!important}
+#mapShell.expanded .property-list .listing h3{font-size:16px!important;margin:10px 0 8px!important}
+#mapShell.expanded .property-list .listing p{font-size:12px!important;line-height:1.65!important;margin:2px 0!important}
+#mapShell.expanded .property-list .listing-actions{margin-top:auto!important;padding-top:12px!important}
+#mapShell.expanded .property-list .listing-actions .btn{font-size:11px!important}
+@media(max-width:920px){#mapShell.expanded .property-list .listing-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:690px){
+ #mapShell.expanded #map{height:min(74vh,620px);min-height:440px}
+ #mapShell.expanded .map-toolbar{top:10px;left:10px;right:10px;flex-direction:column!important;align-items:stretch!important}
+ #mapShell.expanded .segments{width:100%!important;display:flex}
+ #mapShell.expanded .segments button{flex:1;font-size:11px!important;padding:8px 5px!important;min-height:36px}
+ #mapShell.expanded .map-actions{width:100%;justify-content:flex-end!important;gap:6px!important}
+ #mapShell.expanded .map-actions .btn{padding:8px 11px!important;font-size:11px!important;min-height:35px!important}
+ #mapShell.expanded .map-quick-list{left:8px;right:8px;gap:8px;bottom:35px}
+ #mapShell.expanded .map-quick-card{flex-basis:180px;min-height:68px;padding:9px}
+ #mapShell.expanded .map-footer{padding:7px 10px!important;font-size:10px!important}
+ #mapShell.expanded .map-footer #mapHint{display:none}
+ #mapShell.expanded .property-icon.compact .property-note{width:134px!important}
+ #mapShell.expanded .property-list .listing-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:12px!important}
+ #mapShell.expanded .property-list .listing{padding:14px!important}
+}
+@media(max-width:480px){
+ #mapShell.expanded .property-list .listing-grid{grid-template-columns:1fr!important}
+ #mapShell.expanded .property-list .listing h3{font-size:16px!important}
+ #mapShell.expanded .map-quick-card{flex-basis:160px}
+ #mapShell.expanded .map-footer-right{display:none}
+ #mapShell.expanded .property-icon.compact .property-note{width:126px!important}
+ #mapShell.expanded .property-icon .note-location{font-size:9px!important}
+}
+/* A three-column grid at tablet/desktop widths fills the empty right side.
+   Narrower screens switch to two columns and then one. */
+@media(min-width:921px){#mapShell.expanded .property-list .listing-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(prefers-reduced-motion:reduce){#mapShell.expanded .map-quick-card{transition:none}}
+
+
+</style>
+<style id="property-map-sticky-notes-animated-2026-fullscreen-portal">
+/* Preserve property pin/card styling when the map is portaled to BODY. */
+
+/* Compact always-visible sticky notes. Expanded details remain in the SAME note. */
+#mapShell.expanded .map-quick-list,#mapShell.expanded .map-quick-card{display:none!important}
+#mapShell.expanded .property-icon{background:transparent!important;border:0!important;overflow:visible!important;cursor:pointer;outline:none}
+#mapShell.expanded .property-icon .map-marker-core{display:none!important}
+#mapShell.expanded .property-icon .property-pin{position:absolute!important;display:grid!important;place-items:center!important;left:2px!important;top:1px!important;width:24px!important;height:24px!important;background:#11a775!important;border:2px solid #fff!important;border-radius:8px 8px 8px 3px!important;transform:rotate(-45deg);box-shadow:0 5px 13px rgba(2,68,57,.34)!important;transition:transform .22s ease,box-shadow .22s ease!important}
+#mapShell.expanded .property-icon.sold .property-pin{background:#3974e6!important;box-shadow:0 5px 13px rgba(30,71,164,.3)!important}
+#mapShell.expanded .property-icon .property-pin svg{width:13px!important;height:13px!important;transform:rotate(45deg);stroke:#fff;stroke-width:2;fill:none}
+#mapShell.expanded .property-icon.selected .property-pin,#mapShell.expanded .property-icon:hover .property-pin,#mapShell.expanded .property-icon:focus-visible .property-pin{transform:rotate(-45deg) scale(1.12);box-shadow:0 7px 17px rgba(4,52,74,.36)!important}
+#mapShell.expanded .property-icon .property-note{box-sizing:border-box;position:absolute!important;top:auto!important;right:auto!important;bottom:39px!important;left:14px!important;display:block!important;width:130px!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:65px!important;padding:8px 9px!important;border:1px solid #d6e5ee!important;border-left:3px solid #16a374!important;border-radius:10px!important;background:rgba(255,255,255,.98)!important;color:#173e64!important;box-shadow:0 4px 15px rgba(11,44,78,.17)!important;transform:translateX(calc(-50% + var(--note-shift,0px))) translateY(0)!important;transition:width .34s cubic-bezier(.2,.75,.2,1),max-height .39s cubic-bezier(.2,.75,.2,1),padding .28s,box-shadow .3s,background .3s,transform .34s!important;overflow:visible!important;pointer-events:auto!important;cursor:pointer;z-index:1}
+#mapShell.expanded .property-icon.sold .property-note{border-color:#cedef7!important;border-left-color:#3974e6!important}
+#mapShell.expanded .property-icon .property-note:after{content:''!important;display:block!important;position:absolute;left:calc(50% - var(--note-shift,0px) - 5px);bottom:-6px;width:9px;height:9px;background:inherit;border-right:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee;transform:rotate(45deg)}
+#mapShell.expanded .property-icon .note-title{font-size:10.5px!important;font-weight:800!important;line-height:1.4;color:#153960;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-height:none!important;margin:0;padding:0}
+#mapShell.expanded .property-icon .note-size{display:block!important;border:0!important;padding:0!important;margin:3px 0 0!important;font-size:9.5px!important;line-height:1.35!important;color:#10865b!important;font-weight:750;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#mapShell.expanded .property-icon.sold .note-size{color:#2865d5!important}
+#mapShell.expanded .property-icon .note-detail-wrap{display:block;max-height:0;opacity:0;overflow:hidden;visibility:hidden;transition:max-height .40s cubic-bezier(.2,.75,.2,1),opacity .25s ease,visibility 0s linear .40s}
+#mapShell.expanded .property-icon .note-close{position:absolute;right:8px;top:7px;width:27px;height:27px;display:grid;place-items:center;border:0;border-radius:8px;background:#edf3fb;color:#234b72;font-size:20px;line-height:1;opacity:0;visibility:hidden;cursor:pointer;transition:opacity .2s,visibility 0s linear .25s}
+#mapShell.expanded .property-icon .note-close:hover{background:#daeaff}
+#mapShell.expanded .property-icon .note-status{display:inline-flex;align-items:center;gap:6px;margin-top:10px;border-radius:8px;background:#e8f8f1;color:#0a8054;padding:4px 8px;font-size:10px;font-weight:800}
+#mapShell.expanded .property-icon.sold .note-status{background:#e9f0ff;color:#2a5bc4}
+#mapShell.expanded .property-icon .note-kv{display:grid;grid-template-columns:64px minmax(0,1fr);gap:6px;border-bottom:1px solid #eaf0f7;padding:7px 0;font-size:11px;line-height:1.6;overflow-wrap:anywhere}
+#mapShell.expanded .property-icon .note-kv strong{color:#55718b;font-size:10px}
+#mapShell.expanded .property-icon .note-description-full{display:block;margin:9px 0 10px!important;color:#4f6781;font-size:11px;line-height:1.75;overflow-wrap:anywhere;max-height:100px;overflow-y:auto}
+#mapShell.expanded .property-icon .note-route{display:none;margin-top:10px;border-radius:9px;padding:9px 10px;background:#185adb;color:#fff!important;text-align:center;font-size:11px;font-weight:750;text-decoration:none;transition:background .2s}
+#mapShell.expanded .property-icon .note-route:hover{background:#0b419f}
+#mapShell.expanded .property-icon.selected{z-index:1200!important}
+#mapShell.expanded .property-icon.selected .property-note{width:min(278px,calc(100vw - 38px))!important;max-height:360px!important;padding:14px!important;background:#fff!important;box-shadow:0 15px 36px rgba(7,38,78,.28)!important;z-index:30;cursor:default}
+#mapShell.expanded .property-icon.selected .note-title{font-size:14px!important;line-height:1.55;white-space:normal;overflow:visible;padding-right:25px;max-height:68px!important}
+#mapShell.expanded .property-icon.selected .note-size{font-size:11px!important;margin-top:5px!important}
+#mapShell.expanded .property-icon.selected .note-detail-wrap{max-height:215px;overflow-y:auto;opacity:1;visibility:visible;transition:max-height .4s cubic-bezier(.2,.75,.2,1),opacity .35s ease .08s,visibility 0s}
+#mapShell.expanded .property-icon.selected .note-route{display:block}#mapShell.expanded .property-icon.selected .note-close{opacity:1;visibility:visible;transition:opacity .25s ease .16s,visibility 0s}
+#mapShell.expanded .property-icon.note-right .property-note{top:-9px!important;bottom:auto!important;left:34px!important;transform:none!important}
+#mapShell.expanded .property-icon.note-left .property-note{top:-9px!important;bottom:auto!important;left:auto!important;right:36px!important;transform:none!important}
+#mapShell.expanded .property-icon.note-bottom .property-note{top:39px!important;bottom:auto!important;left:14px!important;transform:translateX(calc(-50% + var(--note-shift,0px)))!important}
+#mapShell.expanded .property-icon.note-right .property-note:after{top:17px;bottom:auto;left:-5px;border:0;border-left:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee}
+#mapShell.expanded .property-icon.note-left .property-note:after{top:17px;bottom:auto;left:auto;right:-5px;border:0;border-right:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
+#mapShell.expanded .property-icon.note-bottom .property-note:after{top:-5px;bottom:auto;left:calc(50% - var(--note-shift,0px) - 5px);border:0;border-left:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
+#mapShell.expanded .property-icon.hidden-note:not(.selected) .property-note{visibility:hidden!important;pointer-events:none!important}
+#mapShell.expanded .property-icon.hidden-note:hover .property-note,#mapShell.expanded .property-icon.hidden-note:focus-visible .property-note{visibility:visible!important;pointer-events:auto!important}
+#mapShell.expanded .property-icon:focus-visible .property-note{outline:2px solid #4d8fea;outline-offset:3px}
+#mapShell.expanded .map-footer{background:rgba(255,255,255,.88)!important;backdrop-filter:blur(13px);border-radius:0 0 18px 18px}
+#mapShell.expanded .leaflet-bottom .leaflet-control-zoom{transform:translateY(-25px)!important}
+#mapShell.expanded .map-shell:not(.expanded){box-shadow:0 12px 38px rgba(8,36,78,.12)!important}
+#mapShell.expanded #map{background:#f3f5f7!important}
+html[lang=bn] #mapShell.expanded .property-icon :is(.note-title,.note-size,.note-kv,.note-description-full,.note-route){font-family:'Noto Sans Bengali',sans-serif}
+@media(max-width:690px){#mapShell.expanded .leaflet-bottom .leaflet-control-zoom{transform:translateY(-20px)!important}#mapShell.expanded .property-icon .property-note{width:119px!important;padding:7px 8px!important}#mapShell.expanded .property-icon.selected .property-note{width:min(260px,calc(100vw - 34px))!important;padding:13px!important}#mapShell.expanded .property-icon.selected .note-detail-wrap{max-height:145px}}
+@media(prefers-reduced-motion:reduce){#mapShell.expanded .property-icon :is(.property-note,.property-pin,.note-detail-wrap,.note-close){transition:none!important}}
+
+</style>
+<style id="map-true-fullscreen-overlay-fix">
+/* Reparenting the map outside #properties is deliberate: it avoids animated
+   ancestor transforms, competing stacking contexts and document scroll bleed. */
+html.map-fullscreen-lock {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  scroll-behavior: auto !important;
+}
+body.map-expanded {
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+}
+/* Keep original page layout in place but hide every other visible body layer. */
+body.map-expanded > :not(#mapShell):not(script):not(style):not(link) {
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+body.map-expanded > #mapShell.expanded {
+  display: flex !important;
+  flex-direction: column !important;
+  position: fixed !important;
+  inset: 0 !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  min-height: 0 !important;
+  max-height: 100dvh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+  animation: none !important;
+  overflow: hidden !important;
+  overscroll-behavior: none !important;
+  background: #eaf1f7 !important;
+  box-shadow: none !important;
+  z-index: 2147483000 !important;
+}
+#mapShell.expanded #map {
+  display: block !important;
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: 100% !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: contain !important;
+}
+#mapShell.expanded #map .leaflet-map-pane,
+#mapShell.expanded #map .leaflet-pane,
+#mapShell.expanded #map .leaflet-container,
+#mapShell.expanded #map .maplibregl-canvas,
+#mapShell.expanded #map .maplibregl-canvas-container {
+  touch-action: none !important;
+  overscroll-behavior: contain !important;
+}
+/* Floating controls sit over the map; fullscreen has no footer/page content. */
+#mapShell.expanded .map-footer { display: none !important; }
+#mapShell.expanded .map-toolbar {
+  position: absolute !important;
+  z-index: 900 !important;
+  top: calc(10px + env(safe-area-inset-top, 0px)) !important;
+  left: calc(10px + env(safe-area-inset-left, 0px)) !important;
+  right: calc(10px + env(safe-area-inset-right, 0px)) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 7px !important;
+  background: transparent !important;
+  border: 0 !important;
+  pointer-events: none !important;
+}
+#mapShell.expanded .map-toolbar > * { pointer-events: auto !important; }
+#mapShell.expanded .segments {
+  display: flex !important;
+  max-width: 100% !important;
+  flex-wrap: wrap !important;
+  background: rgba(255,255,255,.96) !important;
+  border: 1px solid #d7e5f4 !important;
+  border-radius: 12px !important;
+  padding: 4px !important;
+  box-shadow: 0 5px 18px rgba(12,42,75,.14) !important;
+}
+#mapShell.expanded .segments button { padding: 9px 11px !important; }
+#mapShell.expanded .map-actions { display:flex !important; gap: 7px !important; margin-left:auto !important; }
+#mapShell.expanded .map-actions .btn {
+  background:rgba(255,255,255,.97) !important;
+  color:#17426f !important;
+  border:1px solid #d5e5f4 !important;
+  border-radius:11px !important;
+  box-shadow:0 5px 18px rgba(12,42,75,.14) !important;
+  min-height:40px !important;
+  padding:7px 10px !important;
+  font-size:11px !important;
+}
+#mapShell.expanded .map-actions #expandMap { color:#1555ae !important; font-weight:700 !important; }
+#mapShell.expanded .leaflet-bottom .leaflet-control-zoom {
+  transform: translateY(-14px) !important;
+  pointer-events: auto !important;
+}
+#mapShell.expanded .leaflet-bottom.leaflet-right {
+  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+}
+@media (max-width: 650px) {
+  #mapShell.expanded .map-toolbar { gap:6px !important; }
+  #mapShell.expanded .segments { width: 100% !important; justify-content: space-around !important; }
+  #mapShell.expanded .segments button { flex:1 1 auto !important; font-size:11px !important; padding:8px 6px !important; }
+  #mapShell.expanded .map-actions { align-self:flex-end !important; }
+  #mapShell.expanded .map-actions #fitMap { font-size:10px !important; }
+}
+</style>
 </head>
 <body>
 <!-- ========== WEBSITE PAGE STRUCTURE | DO NOT EDIT ========== --><div id="scrollProgress" aria-hidden="true"></div>
@@ -3349,13 +3627,99 @@ function declutter(){
 }
 
 function fitVisible(){if(!state.map)return;const points=visibleProperties().map(p=>[p.lat,p.lng]);if(points.length)state.map.fitBounds(L.latLngBounds(points),{paddingTopLeft:[40,105],paddingBottomRight:[40,45],maxZoom:16,animate:false});else state.map.setView(CONFIG.MAP_CENTER,CONFIG.MAP_ZOOM,{animate:false})}
-let fullscreenPreviousFocus=null, inertElements=[];
-function setExpanded(on){if(on===state.expanded)return;state.expanded=on;if(on){closeMenu();fullscreenPreviousFocus=document.activeElement;/* Make all sibling branches inert without disabling the dialog itself. */let node=$('mapShell');while(node&&node!==document.body){for(const sibling of node.parentElement.children){if(sibling!==node&&!sibling.inert){sibling.inert=true;inertElements.push(sibling)}}node=node.parentElement}}else{for(const el of inertElements)el.inert=false;inertElements=[]}$('mapShell').classList.toggle('expanded',on);document.body.classList.toggle('map-expanded',on);$('expandMap').setAttribute('aria-expanded',String(on));$('expandLabel').textContent=t(on?'exitFullScreen':'fullScreen');if(on){$('mapShell').setAttribute('role','dialog');$('mapShell').setAttribute('aria-modal','true');$('mapShell').setAttribute('aria-label',t('mapLabel'));$('expandMap').focus()}else{$('mapShell').removeAttribute('role');$('mapShell').removeAttribute('aria-modal');fullscreenPreviousFocus?.focus({preventScroll:true})}setMapInteractionActive(on);
-requestAnimationFrame(()=>{
-  if(!state.map)return;
-  state.map.invalidateSize({pan:false});
-  scheduleDeclutter();
-});}
+// Fullscreen portal: remove the map from nested page/scroll/animation containers.
+// It becomes a direct child of BODY while expanded so no website section can
+// overlay it, scroll past it, or create an unexpected containing block.
+let fullscreenPreviousFocus=null;
+let fullscreenDock=null;
+let fullscreenBodyStyle=null;
+let fullscreenScrollY=0;
+let fullscreenPreviousHTMLScrollBehavior=null;
+let fullscreenInertElements=[];
+function setExpanded(on){
+  if(on===state.expanded)return;
+  const shell=$('mapShell');
+  if(on){
+    closeMenu();
+    // A top-layer language dialog would otherwise cover the map.
+    const languageDialog=$('languageWelcome');
+    if(languageDialog?.open && typeof languageDialog.close==='function') languageDialog.close();
+    fullscreenPreviousFocus=document.activeElement;
+    fullscreenScrollY=window.scrollY||document.documentElement.scrollTop||0;
+    fullscreenDock={parent:shell.parentNode,next:shell.nextSibling};
+    fullscreenBodyStyle={
+      position:document.body.style.position, top:document.body.style.top,
+      left:document.body.style.left, right:document.body.style.right,
+      width:document.body.style.width, height:document.body.style.height,
+      overflow:document.body.style.overflow
+    };
+    fullscreenPreviousHTMLScrollBehavior=document.documentElement.style.scrollBehavior;
+    // Portal first: this avoids transforms, clipping and stacking contexts on
+    // the properties section and keeps the overlay at viewport level.
+    document.body.appendChild(shell);
+    state.expanded=true;
+    shell.classList.add('expanded');
+    document.documentElement.classList.add('map-fullscreen-lock');
+    document.body.classList.add('map-expanded');
+    // Preserve the exact page position, including in iOS Safari.
+    document.body.style.position='fixed';
+    document.body.style.top=`-${fullscreenScrollY}px`;
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.style.width='100%';
+    document.body.style.height='100%';
+    document.body.style.overflow='hidden';
+    fullscreenInertElements=[];
+    for(const element of document.body.children){
+      if(element===shell || element.inert || ['SCRIPT','STYLE','LINK'].includes(element.tagName))continue;
+      element.inert=true;
+      fullscreenInertElements.push(element);
+    }
+    shell.setAttribute('role','dialog');
+    shell.setAttribute('aria-modal','true');
+    shell.setAttribute('aria-label',t('mapLabel'));
+    $('expandMap').setAttribute('aria-expanded','true');
+    $('expandLabel').textContent=t('exitFullScreen');
+    setMapInteractionActive(true);
+    $('expandMap').focus({preventScroll:true});
+  }else{
+    state.expanded=false;
+    shell.classList.remove('expanded');
+    shell.classList.remove('map-interactive');
+    // Restore the original DOM position before showing the website again.
+    if(fullscreenDock?.parent){
+      const {parent,next}=fullscreenDock;
+      parent.insertBefore(shell,next?.parentNode===parent?next:null);
+    }
+    fullscreenDock=null;
+    for(const element of fullscreenInertElements)element.inert=false;
+    fullscreenInertElements=[];
+    document.documentElement.classList.remove('map-fullscreen-lock');
+    document.body.classList.remove('map-expanded');
+    if(fullscreenBodyStyle){
+      for(const [key,value] of Object.entries(fullscreenBodyStyle))document.body.style[key]=value;
+      fullscreenBodyStyle=null;
+    }
+    shell.removeAttribute('role');
+    shell.removeAttribute('aria-modal');
+    $('expandMap').setAttribute('aria-expanded','false');
+    $('expandLabel').textContent=t('fullScreen');
+    setMapInteractionActive(false);
+    // Scroll restoration must not animate because the site has smooth scroll.
+    document.documentElement.style.scrollBehavior='auto';
+    window.scrollTo(0,fullscreenScrollY);
+    document.documentElement.style.scrollBehavior=fullscreenPreviousHTMLScrollBehavior||'';
+    fullscreenPreviousFocus?.focus?.({preventScroll:true});
+  }
+  // Leaflet/MapLibre need to recalculate sizes after the map changes parent.
+  requestAnimationFrame(()=>{
+    state.map?.invalidateSize({pan:false,animate:false});
+    requestAnimationFrame(()=>{
+      state.map?.invalidateSize({pan:false,animate:false});
+      scheduleDeclutter();
+    });
+  });
+}
 function setupMapActions(){$('refreshSheet').addEventListener('click',()=>refreshData());$('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){state.filter=b.dataset.filter;state.viewTouched=true;renderProperties(true)}});$('fitMap').addEventListener('click',()=>{state.viewTouched=true;fitVisible()});$('expandMap').addEventListener('click',()=>setExpanded(!state.expanded));['listingGrid'].forEach(id=>$(id).addEventListener('click',e=>{const b=e.target.closest('[data-show-property]');if(!b||!state.map)return;if(!state.markers.has(b.dataset.showProperty)){state.filter='all';renderProperties(false)}const entry=state.markers.get(b.dataset.showProperty);if(!entry)return;state.selected=entry.property.id;state.viewTouched=true;$('mapShell').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});state.map.setView([entry.property.lat,entry.property.lng],Math.max(16,state.map.getZoom()),{animate:false});declutter();chooseStickyNote(entry.property.id,true);entry.marker.getElement()?.focus({preventScroll:true})}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(state.expanded)setExpanded(false);else if(!$('mobileNav').hidden)closeMenu(true);else if(state.selected){state.selected=null;scheduleDeclutter()}}if(state.expanded&&e.key==='Tab'){const items=[...$('mapShell').querySelectorAll('a[href],button,[tabindex="0"]')].filter(el=>el.getClientRects().length&&!el.disabled),first=items[0],last=items.at(-1);if(e.shiftKey&&(document.activeElement===first||!$('mapShell').contains(document.activeElement))){e.preventDefault();last?.focus()}else if(!e.shiftKey&&(document.activeElement===last||!$('mapShell').contains(document.activeElement))){e.preventDefault();first?.focus()}}})}
 function validateForm(focus=true){state.formErrors={};if(!$('fullName').value.trim())state.formErrors.name='nameRequired';if(!normalPhone($('phoneInput').value))state.formErrors.phone='phoneInvalid';renderFormErrors();if(focus){if(state.formErrors.name)$('fullName').focus();else if(state.formErrors.phone)$('phoneInput').focus()}return!Object.keys(state.formErrors).length}
 function renderFormErrors(){$('nameError').textContent=state.formErrors.name?t(state.formErrors.name):'';$('phoneError').textContent=state.formErrors.phone?t(state.formErrors.phone):'';$('fullName').setAttribute('aria-invalid',String(!!state.formErrors.name));$('phoneInput').setAttribute('aria-invalid',String(!!state.formErrors.phone));$('formStatus').textContent=state.formStatus?t(state.formStatus):''}
