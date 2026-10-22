@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <style>/* Internal feed controls are not part of the public interface. */
 #mapSource,#refreshSheet,#dataState{display:none!important}
-@media (pointer: coarse) {
-  #map { touch-action: pan-y pinch-zoom; }
-  #map.mobile-map-active { touch-action: none; }
-}
+/* Map touch handling is selected by the map-shell interaction state below.
+   Do not capture a user's first normal page swipe. */
 </style>
 <!--
 ===============================================================================
@@ -131,7 +129,7 @@ const DEFAULTS = {
   OfficeAddress: 'Office #1: House#2, Road#3, Block#J, Banasree, Rampura, Dhaka-1219. Office #2: 2nd Floor, Billal Hossain Super Market, Trimohoni Bazar, Dhaka-1214.',
   OfficeAddressBN: 'অফিস ১: বাড়ি ২, সড়ক ৩, ব্লক জে, বনশ্রী, রামপুরা, ঢাকা-১২১৯। অফিস ২: দ্বিতীয় তলা, বিল্লাল হোসেন সুপার মার্কেট, ত্রিমোহনী বাজার, ঢাকা-১২১৪।',
   // Intro biography — English
-  BioEnglish: 'Over 16 years of experience in Dhaka’s land and real estate sector. Highly skilled in land buying and selling, project development, and land document verification across Khilgaon, Banasree, Aftabnagar, and Demra. Years of practical experience, a deep understanding of the local market, and a commitment to honesty and transparency form the foundation of professional identity.',
+  BioEnglish: 'Over 16 years of experience in the land and real estate sector in Dhaka. Specialized in land buying and selling, project development, and land document verification in Khilgaon, Banasree, Aftabnagar, and Demra. Years of practical experience, deep knowledge of the local market, and a commitment to honesty and transparency are the main foundations of this professional identity.',
   // Intro biography — বাংলা
   BioBangla: 'ঢাকার ভূমি ও আবাসন খাতে ১৬ বছরেরও বেশি সময় ধরে কাজ করার অভিজ্ঞতা রয়েছে। খিলগাঁও, বনশ্রী, আফতাবনগর ও ডেমরা এলাকায় জমি ক্রয়-বিক্রয়, প্রকল্প উন্নয়ন এবং ভূমির দলিলপত্র যাচাইয়ে বিশেষ পারদর্শী। দীর্ঘদিনের বাস্তব অভিজ্ঞতা, স্থানীয় বাজার সম্পর্কে গভীর ধারণা এবং সততা ও স্বচ্ছতার সঙ্গে কাজ করার অঙ্গীকারই পেশাগত পরিচয়ের মূল ভিত্তি।',
 };
@@ -149,15 +147,12 @@ const TEXT = {
     professionalTagline: 'Real Estate Developer | Land Documentation Specialist',
     name: 'Mohammad Motiur Rahman',
     shortName: 'Motiur Rahman',
-    consultant: 'Land & Property Consultant',
     chairman: 'Chairman',
     formerChairman: 'Former Chairman',
     currentRole: 'Chairman, Dhaka Dream Homes',
     pastRole: 'Former Chairman, Bailey Properties Ltd.',
     yearsNumber: '16+',
     yearsExperience: 'Years of experience',
-    currentPeriod: '2023 – Present',
-    formerPeriod: '2018 – 2023',
     // ---- OFFICE ADDRESSES / COMPANY NAMES ----
     heroOfficeOneLabel: 'Office #1',
     heroOfficeTwoLabel: 'Office #2',
@@ -265,7 +260,7 @@ const TEXT = {
     contact: 'Contact',
     heroEyebrow: 'Experience. Perspective. Personal guidance.',
     portraitAlt: 'Portrait of Mohammad Motiur Rahman',
-    viewMap: 'View properties on map',
+    viewMap: 'View plots on map',
     directChat: 'Direct WhatsApp chat',
     experienceEyebrow: 'Leadership & experience',
     experienceHeading: 'Experience that brings perspective.',
@@ -376,7 +371,7 @@ const TEXT = {
     pastServices: "নির্বাহী নেতৃত্ব · ভূমি প্রকল্প · আবাসন খাতে অভিজ্ঞতা",
     // ---- SERVICES SECTION ----
     servicesEyebrow: 'সেবাসমূহ',
-    servicesHeading: "জমি ও সম্পত্তিবিষয়ক সেবা",
+    servicesHeading: "জমি ও সম্পত্তি বিষয়ক সেবা",
     serviceBuyingTitle: 'জমি ক্রয় ও বিক্রয়',
     serviceBuyingDesc: "যথাযথ যাচাই-বাছাইয়ের মাধ্যমে সম্ভাবনাময় জমি ক্রয় এবং নিজস্ব মালিকানাধীন জমি সরাসরি বিক্রয়।",
     serviceDocsTitle: 'রিয়েল এস্টেট ও প্রপার্টি ডেভেলপমেন্ট',
@@ -453,7 +448,7 @@ const TEXT = {
     contact: 'যোগাযোগ',
     heroEyebrow: 'অভিজ্ঞতা। দূরদর্শিতা। ব্যক্তিগত পরামর্শ।',
     portraitAlt: 'মোহাম্মদ মতিউর রহমানের প্রতিকৃতি',
-    viewMap: 'মানচিত্রে সম্পত্তি দেখুন',
+    viewMap: 'মানচিত্রে প্লট দেখুন',
     directChat: 'হোয়াটসঅ্যাপে কথা বলুন',
     experienceEyebrow: 'নেতৃত্ব ও অভিজ্ঞতা',
     experienceHeading: "অভিজ্ঞতা থেকে দূরদর্শী দিকনির্দেশনা।",
@@ -2615,6 +2610,47 @@ html[lang=bn] .hero h1{line-height:1.35}html[lang=bn] .lead{line-height:1.9}
 body.map-expanded #header,body.map-expanded #scrollProgress,body.map-expanded .floating-wa{display:none!important}
 body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset:0!important;width:100%!important;max-width:none!important;height:100dvh!important;margin:0!important;z-index:10000!important;transform:none!important;filter:none!important;transition:none!important}
 </style>
+<style id="map-touch-and-zoom-fix">
+/* Visitor-first map interaction: regular page scroll by default; activate a
+   map with a stationary click/tap. Fullscreen always allows direct gestures. */
+#properties .map-shell:not(.expanded):not(.map-interactive) #map,
+#properties .map-shell:not(.expanded):not(.map-interactive) #map .leaflet-map-pane,
+#properties .map-shell:not(.expanded):not(.map-interactive) #map .leaflet-pane,
+#properties .map-shell:not(.expanded):not(.map-interactive) #map .maplibregl-canvas,
+#properties .map-shell:not(.expanded):not(.map-interactive) #map .maplibregl-canvas-container {
+  touch-action: pan-y pinch-zoom !important;
+}
+#properties .map-shell:is(.expanded,.map-interactive) #map,
+#properties .map-shell:is(.expanded,.map-interactive) #map .leaflet-map-pane,
+#properties .map-shell:is(.expanded,.map-interactive) #map .leaflet-pane,
+#properties .map-shell:is(.expanded,.map-interactive) #map .maplibregl-canvas,
+#properties .map-shell:is(.expanded,.map-interactive) #map .maplibregl-canvas-container {
+  touch-action: none !important;
+}
+#properties .map-shell .leaflet-bottom .leaflet-control-zoom {
+  transform: translateY(-150px) !important;
+  pointer-events: auto !important;
+}
+#properties .map-shell .leaflet-control-zoom a {
+  cursor: pointer;
+  touch-action: manipulation !important;
+  pointer-events: auto;
+}
+/* Justify narrative text in BOTH English and Bangla, maintaining the
+   original fonts, layout, colour scheme, and natural last-line alignment. */
+.hero .hero-content .hero-bio,
+#experience .company-grid .company-profile .company-about,
+#experience .company-grid .company-profile .card-description,
+#experience .company-grid .company-profile .company-detail-content,
+#services .advisory-intro,
+#impact .impact-intro p,
+#properties .listing-description {
+  text-align: justify !important;
+  text-align-last: start;
+  text-justify: inter-word;
+  overflow-wrap: break-word;
+}
+</style>
 
 <style id="refined-company-map-welcome">
 .company-overview-heading{margin:22px 0 10px;font-size:14px;color:#243d35}
@@ -2807,7 +2843,7 @@ const escapeHTML=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const latin=v=>String(v).replace(/[০-৯]/g,c=>'০১২৩৪৫৬৭৮৯'.indexOf(c));
 function storedLanguage(){try{return localStorage.getItem('mmr-language')}catch{return null}}
 const initialLanguage=storedLanguage();
-const state={lang:['en','bn'].includes(initialLanguage)?initialLanguage:CONFIG.DEFAULT_LANGUAGE,settings:{...DEFAULTS},properties:[],filter:'all',map:null,markers:new Map(),selected:null,expanded:false,live:false,propertyStatus:'loading',settingsStatus:'',invalidRows:0,busy:false,loaded:false,formErrors:{},formStatus:'',portraitURL:null,activeSection:'home',viewTouched:false,tileError:false,lastSync:null,syncError:'',rowIssues:[]};
+const state={lang:['en','bn'].includes(initialLanguage)?initialLanguage:CONFIG.DEFAULT_LANGUAGE,settings:{...DEFAULTS},properties:[],filter:'all',map:null,markers:new Map(),selected:null,expanded:false,live:false,propertyStatus:'loading',settingsStatus:'',invalidRows:0,busy:false,loaded:false,formErrors:{},formStatus:'',portraitURL:null,activeSection:'home',viewTouched:false,mapInteractionActive:false,tileError:false,lastSync:null,syncError:'',rowIssues:[]};
 const t=k=>TEXT[state.lang][k]??TEXT.en[k]??k;
 const display=v=>state.lang==='bn'?String(v).replace(/\d/g,c=>'০১২৩৪৫৬৭৮৯'[Number(c)]):String(v);
 const numeric=v=>display(Number(v).toLocaleString('en-US',{maximumFractionDigits:3,useGrouping:false}));
@@ -3145,14 +3181,24 @@ function chooseStickyNote(id,fromList=false){
   if(state.selected)requestAnimationFrame(()=>ensureSelectedNoteVisible());
 }
 
+function setMapInteractionActive(enable){
+  const active=Boolean(enable||state.expanded);
+  state.mapInteractionActive=active;
+  $('mapShell').classList.toggle('map-interactive',active);
+  if(!state.map)return;
+  // Important: disabling wheel zoom allows wheel/trackpad scrolling to reach
+  // the browser. Disabling drag allows touch scrolling to reach the browser.
+  const method=active?'enable':'disable';
+  state.map.dragging[method]();
+  state.map.scrollWheelZoom[method]();
+  state.map.touchZoom[method]();
+  state.map.doubleClickZoom[method]();
+}
 function initMap(){
   if(!window.L){$('mapEmpty').textContent=t('mapUnavailable');$('mapEmpty').hidden=false;$('fitMap').disabled=true;state.tileError=true;return}
-  state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:false,touchZoom:true,doubleClickZoom:true,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
-  // Before the first map tap, a one-finger swipe scrolls the page.
-  // After tapping the map, one-finger drag pans the map until tapping outside.
-  if(window.matchMedia?.('(pointer: coarse)').matches){
-    state.map.dragging.disable();
-  }
+  state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:false,dragging:false,touchZoom:false,doubleClickZoom:false,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
+  // Embedded map starts passive: one-finger page scroll and wheel scrolling
+  // pass through. A deliberate tap/click activates all map gestures.
   L.control.zoom({position:'bottomright'}).addTo(state.map);
   // Default: genuinely free, no-key OpenFreeMap vector basemap with Leaflet markers on top.
   // Do not silently retry the OSMF tile.openstreetmap.org server after a policy block.
@@ -3180,47 +3226,34 @@ function initMap(){
   state.map.on('zoomend moveend resize',scheduleDeclutter);
   state.map.on('dragstart',()=>state.viewTouched=true);
   state.map.on('click',()=>{if(state.selected){state.selected=null;scheduleDeclutter()}});
-  // Click-to-zoom: normal wheel scrolling passes through until a user clicks
-  // the map. A pointer exit, click outside, Escape, or lost window focus resets it.
-  // There are no overlays or visible prompts.
+  // Starting a swipe on an inactive map must scroll the WEBSITE, not the map.
+  // Activate only after a short, stationary pointer/touch gesture finishes.
   const mapElement=$('map');
-  const coarsePointer=window.matchMedia?.('(pointer: coarse)');
-  const disableWheelZoom=()=>{
-    if(state.map?.scrollWheelZoom?.enabled())state.map.scrollWheelZoom.disable();
-  };
-  const deactivateMobileMap=()=>{
-    if(!mapElement.classList.contains('mobile-map-active'))return;
-    mapElement.classList.remove('mobile-map-active');
-    state.map.dragging.disable();
-  };
-  mapElement.addEventListener('click',event=>{
-    // A tap activates one-finger map panning; desktop click activates wheel zoom.
-    if(event.detail===0||event.button!==0||event.target.closest('.leaflet-control'))return;
-    if(coarsePointer?.matches){
-      mapElement.classList.add('mobile-map-active');
-      state.map.dragging.enable();
-    }else{
-      state.map.scrollWheelZoom.enable();
-    }
-  });
-  // Mouse exit resets desktop wheel zoom; mobile stays active until touch outside.
-  mapElement.addEventListener('mouseleave',disableWheelZoom);
-  document.addEventListener('pointerdown',event=>{
-    if(!mapElement.contains(event.target)){
-      disableWheelZoom();
-      if(event.pointerType==='touch'||event.pointerType==='pen'||coarsePointer?.matches)deactivateMobileMap();
-    }
+  let tapStart=null;
+  mapElement.addEventListener('pointerdown',e=>{
+    if(state.expanded||state.mapInteractionActive||e.target.closest?.('.leaflet-control'))return;
+    if(e.pointerType==='mouse'&&e.button!==0)return;
+    tapStart={id:e.pointerId,x:e.clientX,y:e.clientY,at:performance.now()};
+  },{passive:true,capture:true});
+  mapElement.addEventListener('pointerup',e=>{
+    if(!tapStart||tapStart.id!==e.pointerId)return;
+    const wasTap=Math.hypot(e.clientX-tapStart.x,e.clientY-tapStart.y)<=12&&performance.now()-tapStart.at<750;
+    tapStart=null;
+    if(wasTap){state.viewTouched=true;setMapInteractionActive(true)}
+  },{passive:true,capture:true});
+  mapElement.addEventListener('pointercancel',()=>{tapStart=null},{passive:true,capture:true});
+  // Desktop pointer leaving and any click/tap outside restore normal page scroll.
+  mapElement.addEventListener('pointerleave',e=>{
+    if(!state.expanded&&e.pointerType==='mouse'&&!e.buttons)setMapInteractionActive(false);
   },{passive:true});
-  document.addEventListener('keydown',event=>{
-    if(event.key==='Escape'){disableWheelZoom();deactivateMobileMap();}
+  document.addEventListener('pointerdown',e=>{
+    if(!state.expanded&&!mapElement.contains(e.target))setMapInteractionActive(false);
+  },{passive:true});
+  mapElement.addEventListener('keydown',e=>{
+    if(e.key==='Enter'||e.key===' '){state.viewTouched=true;setMapInteractionActive(true)}
   });
-  document.addEventListener('visibilitychange',()=>{
-    if(document.hidden)disableWheelZoom();
-  });
-  window.addEventListener('blur',disableWheelZoom);
-  $('map').addEventListener('pointerdown',()=>state.viewTouched=true,{passive:true});
-  $('map').addEventListener('keydown',()=>state.viewTouched=true);
   state.map.on('popupclose',e=>{if(state.selected===e.popup._source?.options.propertyId)state.selected=null;scheduleDeclutter()});
+  setMapInteractionActive(state.expanded);
   translateMapControls();
 }
 function translateMapControls(){[['.leaflet-control-zoom-in','zoomIn'],['.leaflet-control-zoom-out','zoomOut'],['.leaflet-popup-close-button','closePopup']].forEach(([s,k])=>all(s).forEach(el=>{el.setAttribute('aria-label',t(k));el.title=t(k)}))}
@@ -3317,7 +3350,12 @@ function declutter(){
 
 function fitVisible(){if(!state.map)return;const points=visibleProperties().map(p=>[p.lat,p.lng]);if(points.length)state.map.fitBounds(L.latLngBounds(points),{paddingTopLeft:[40,105],paddingBottomRight:[40,45],maxZoom:16,animate:false});else state.map.setView(CONFIG.MAP_CENTER,CONFIG.MAP_ZOOM,{animate:false})}
 let fullscreenPreviousFocus=null, inertElements=[];
-function setExpanded(on){if(on===state.expanded)return;state.expanded=on;if(on){closeMenu();fullscreenPreviousFocus=document.activeElement;/* Make all sibling branches inert without disabling the dialog itself. */let node=$('mapShell');while(node&&node!==document.body){for(const sibling of node.parentElement.children){if(sibling!==node&&!sibling.inert){sibling.inert=true;inertElements.push(sibling)}}node=node.parentElement}}else{for(const el of inertElements)el.inert=false;inertElements=[]}$('mapShell').classList.toggle('expanded',on);document.body.classList.toggle('map-expanded',on);$('expandMap').setAttribute('aria-expanded',String(on));$('expandLabel').textContent=t(on?'exitFullScreen':'fullScreen');if(on){$('mapShell').setAttribute('role','dialog');$('mapShell').setAttribute('aria-modal','true');$('mapShell').setAttribute('aria-label',t('mapLabel'));$('expandMap').focus()}else{$('mapShell').removeAttribute('role');$('mapShell').removeAttribute('aria-modal');fullscreenPreviousFocus?.focus({preventScroll:true})}requestAnimationFrame(()=>state.map?.invalidateSize({pan:false}))}
+function setExpanded(on){if(on===state.expanded)return;state.expanded=on;if(on){closeMenu();fullscreenPreviousFocus=document.activeElement;/* Make all sibling branches inert without disabling the dialog itself. */let node=$('mapShell');while(node&&node!==document.body){for(const sibling of node.parentElement.children){if(sibling!==node&&!sibling.inert){sibling.inert=true;inertElements.push(sibling)}}node=node.parentElement}}else{for(const el of inertElements)el.inert=false;inertElements=[]}$('mapShell').classList.toggle('expanded',on);document.body.classList.toggle('map-expanded',on);$('expandMap').setAttribute('aria-expanded',String(on));$('expandLabel').textContent=t(on?'exitFullScreen':'fullScreen');if(on){$('mapShell').setAttribute('role','dialog');$('mapShell').setAttribute('aria-modal','true');$('mapShell').setAttribute('aria-label',t('mapLabel'));$('expandMap').focus()}else{$('mapShell').removeAttribute('role');$('mapShell').removeAttribute('aria-modal');fullscreenPreviousFocus?.focus({preventScroll:true})}setMapInteractionActive(on);
+requestAnimationFrame(()=>{
+  if(!state.map)return;
+  state.map.invalidateSize({pan:false});
+  scheduleDeclutter();
+});}
 function setupMapActions(){$('refreshSheet').addEventListener('click',()=>refreshData());$('filters').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(b){state.filter=b.dataset.filter;state.viewTouched=true;renderProperties(true)}});$('fitMap').addEventListener('click',()=>{state.viewTouched=true;fitVisible()});$('expandMap').addEventListener('click',()=>setExpanded(!state.expanded));['listingGrid'].forEach(id=>$(id).addEventListener('click',e=>{const b=e.target.closest('[data-show-property]');if(!b||!state.map)return;if(!state.markers.has(b.dataset.showProperty)){state.filter='all';renderProperties(false)}const entry=state.markers.get(b.dataset.showProperty);if(!entry)return;state.selected=entry.property.id;state.viewTouched=true;$('mapShell').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'center'});state.map.setView([entry.property.lat,entry.property.lng],Math.max(16,state.map.getZoom()),{animate:false});declutter();chooseStickyNote(entry.property.id,true);entry.marker.getElement()?.focus({preventScroll:true})}));document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(state.expanded)setExpanded(false);else if(!$('mobileNav').hidden)closeMenu(true);else if(state.selected){state.selected=null;scheduleDeclutter()}}if(state.expanded&&e.key==='Tab'){const items=[...$('mapShell').querySelectorAll('a[href],button,[tabindex="0"]')].filter(el=>el.getClientRects().length&&!el.disabled),first=items[0],last=items.at(-1);if(e.shiftKey&&(document.activeElement===first||!$('mapShell').contains(document.activeElement))){e.preventDefault();last?.focus()}else if(!e.shiftKey&&(document.activeElement===last||!$('mapShell').contains(document.activeElement))){e.preventDefault();first?.focus()}}})}
 function validateForm(focus=true){state.formErrors={};if(!$('fullName').value.trim())state.formErrors.name='nameRequired';if(!normalPhone($('phoneInput').value))state.formErrors.phone='phoneInvalid';renderFormErrors();if(focus){if(state.formErrors.name)$('fullName').focus();else if(state.formErrors.phone)$('phoneInput').focus()}return!Object.keys(state.formErrors).length}
 function renderFormErrors(){$('nameError').textContent=state.formErrors.name?t(state.formErrors.name):'';$('phoneError').textContent=state.formErrors.phone?t(state.formErrors.phone):'';$('fullName').setAttribute('aria-invalid',String(!!state.formErrors.name));$('phoneInput').setAttribute('aria-invalid',String(!!state.formErrors.phone));$('formStatus').textContent=state.formStatus?t(state.formStatus):''}
@@ -3437,7 +3475,8 @@ function setupLanguageWelcome(){
  });
  dialog.addEventListener('close',()=>{document.body.style.overflow=previousOverflow;if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});});
  setTimeout(()=>{
-  if(state.expanded)setExpanded(false);
+  // Never interrupt active map navigation with a delayed welcome dialog.
+  if(state.expanded||state.viewTouched||document.hidden)return;
   previousFocus=document.activeElement;
   closeMenu();
   dialog.querySelectorAll('[data-welcome-lang]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.welcomeLang===state.lang)));
