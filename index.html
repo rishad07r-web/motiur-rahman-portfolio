@@ -4,8 +4,7 @@
 <meta charset="UTF-8">
 <style>/* Internal feed controls are not part of the public interface. */
 #mapSource,#refreshSheet,#dataState{display:none!important}
-/* Map touch handling is selected by the map-shell interaction state below.
-   Do not capture a user's first normal page swipe. */
+/* Touch starts on notes scroll their content; touch starts on the map pan it. */
 </style>
 <!--
 ===============================================================================
@@ -1991,7 +1990,7 @@ footer .footer-grid>div:first-child{grid-column:auto}}
 #properties .property-icon .property-pin{left:1px!important;top:0!important;width:28px!important;height:28px!important;border-radius:11px 11px 11px 3px!important;transform:rotate(-45deg);border:2px solid white!important;background:#17a56c!important;box-shadow:0 3px 0 rgba(4,42,23,.10),0 5px 17px rgba(6,49,38,.35)!important;display:grid;place-items:center;color:white}
 #properties .property-icon.sold .property-pin{background:#3673e4!important;box-shadow:0 5px 17px rgba(14,52,133,.38)!important}
 #properties .property-icon .property-pin svg{width:15px;height:15px;transform:rotate(45deg)}
-#properties .property-icon .property-note{position:absolute!important;left:15px!important;bottom:46px!important;top:auto!important;right:auto!important;transform:translateX(-50%)!important;width:166px!important;min-height:0!important;padding:10px 12px!important;border:1px solid #c8e5d6!important;border-left:4px solid #1ba66d!important;border-radius:11px!important;background:rgba(255,255,255,.97)!important;color:#17446b!important;box-shadow:0 5px 16px rgba(14,39,71,.16)!important;overflow:visible;line-height:1.35!important;pointer-events:none}
+#properties .property-icon .property-note{position:absolute!important;left:15px!important;bottom:46px!important;top:auto!important;right:auto!important;transform:translateX(-50%);width:166px!important;min-height:0!important;padding:10px 12px!important;border:1px solid #c8e5d6!important;border-left:4px solid #1ba66d!important;border-radius:11px!important;background:rgba(255,255,255,.97)!important;color:#17446b!important;box-shadow:0 5px 16px rgba(14,39,71,.16)!important;overflow:visible;line-height:1.35!important;pointer-events:none}
 #properties .property-icon.sold .property-note{border-color:#b7cef5!important;border-left-color:#3673e4!important}
 #properties .property-icon .property-note:after{display:none!important}
 #properties .property-icon .note-title{display:block;color:#133c66;font-size:11.5px;font-weight:800;line-height:1.4;word-break:break-word}
@@ -2001,9 +2000,9 @@ footer .footer-grid>div:first-child{grid-column:auto}}
 #properties .property-icon.compact .note-title{font-size:11px!important}
 #properties .property-icon.compact .note-size{margin-top:3px!important;padding-top:3px!important}
 #properties .property-icon.selected .property-note{width:186px!important;border-width:1px!important;border-left-width:4px!important;background:#fff!important;box-shadow:0 10px 26px rgba(13,40,81,.29)!important;z-index:10}
-#properties .property-icon.note-right .property-note{top:-3px!important;bottom:auto!important;left:43px!important;right:auto!important;transform:none!important}
-#properties .property-icon.note-left .property-note{top:-3px!important;bottom:auto!important;left:auto!important;right:43px!important;transform:none!important}
-#properties .property-icon.note-bottom .property-note{top:43px!important;bottom:auto!important;left:15px!important;right:auto!important;transform:translateX(-50%)!important}
+#properties .property-icon.note-right .property-note{top:-3px!important;bottom:auto!important;left:43px!important;right:auto!important;transform:none}
+#properties .property-icon.note-left .property-note{top:-3px!important;bottom:auto!important;left:auto!important;right:43px!important;transform:none}
+#properties .property-icon.note-bottom .property-note{top:43px!important;bottom:auto!important;left:15px!important;right:auto!important;transform:translateX(-50%)}
 #properties .property-icon.hidden-note .property-note{visibility:hidden!important;pointer-events:none!important}
 #properties .property-icon:hover .property-note,#properties .property-icon:focus .property-note{visibility:visible!important}
 #properties .leaflet-bottom .leaflet-control-zoom{transform:translateY(-116px);border:1px solid rgba(226,235,246,.9)!important;border-radius:12px!important}
@@ -2043,7 +2042,7 @@ footer .footer-grid>div:first-child{grid-column:auto}}
 #properties .property-icon.sold .property-pin{background:#3974e6!important;box-shadow:0 5px 13px rgba(30,71,164,.3)!important}
 #properties .property-icon .property-pin svg{width:13px!important;height:13px!important;transform:rotate(45deg);stroke:#fff;stroke-width:2;fill:none}
 #properties .property-icon.selected .property-pin,#properties .property-icon:hover .property-pin,#properties .property-icon:focus-visible .property-pin{transform:rotate(-45deg) scale(1.12);box-shadow:0 7px 17px rgba(4,52,74,.36)!important}
-#properties .property-icon .property-note{box-sizing:border-box;position:absolute!important;top:auto!important;right:auto!important;bottom:39px!important;left:14px!important;display:block!important;width:130px!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:65px!important;padding:8px 9px!important;border:1px solid #d6e5ee!important;border-left:3px solid #16a374!important;border-radius:10px!important;background:rgba(255,255,255,.98)!important;color:#173e64!important;box-shadow:0 4px 15px rgba(11,44,78,.17)!important;transform:translateX(calc(-50% + var(--note-shift,0px))) translateY(0)!important;transition:width .34s cubic-bezier(.2,.75,.2,1),max-height .39s cubic-bezier(.2,.75,.2,1),padding .28s,box-shadow .3s,background .3s,transform .34s!important;overflow:visible!important;pointer-events:auto!important;cursor:pointer;z-index:1}
+#properties .property-icon .property-note{box-sizing:border-box;position:absolute!important;top:auto!important;right:auto!important;bottom:39px!important;left:14px!important;display:block!important;width:130px!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:65px!important;padding:8px 9px!important;border:1px solid #d6e5ee!important;border-left:3px solid #16a374!important;border-radius:10px!important;background:rgba(255,255,255,.98)!important;color:#173e64!important;box-shadow:0 4px 15px rgba(11,44,78,.17)!important;transform:translateX(calc(-50% + var(--note-shift,0px))) translateY(0);transition:width .34s cubic-bezier(.2,.75,.2,1),max-height .39s cubic-bezier(.2,.75,.2,1),padding .28s,box-shadow .3s,background .3s,transform .34s!important;overflow:visible!important;pointer-events:auto!important;cursor:pointer;z-index:1}
 #properties .property-icon.sold .property-note{border-color:#cedef7!important;border-left-color:#3974e6!important}
 #properties .property-icon .property-note:after{content:""!important;display:block!important;position:absolute;left:calc(50% - var(--note-shift,0px) - 5px);bottom:-6px;width:9px;height:9px;background:inherit;border-right:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee;transform:rotate(45deg)}
 #properties .property-icon .note-title{font-size:10.5px!important;font-weight:800!important;line-height:1.4;color:#153960;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-height:none!important;margin:0;padding:0}
@@ -2066,9 +2065,9 @@ footer .footer-grid>div:first-child{grid-column:auto}}
 #properties .property-icon.selected .note-detail-wrap{max-height:215px;overflow-y:auto;opacity:1;visibility:visible;transition:max-height .4s cubic-bezier(.2,.75,.2,1),opacity .35s ease .08s,visibility 0s}
 #properties .property-icon.selected .note-route{display:block}
 #properties .property-icon.selected .note-close{opacity:1;visibility:visible;transition:opacity .25s ease .16s,visibility 0s}
-#properties .property-icon.note-right .property-note{top:-9px!important;bottom:auto!important;left:34px!important;transform:none!important}
-#properties .property-icon.note-left .property-note{top:-9px!important;bottom:auto!important;left:auto!important;right:36px!important;transform:none!important}
-#properties .property-icon.note-bottom .property-note{top:39px!important;bottom:auto!important;left:14px!important;transform:translateX(calc(-50% + var(--note-shift,0px)))!important}
+#properties .property-icon.note-right .property-note{top:-9px!important;bottom:auto!important;left:34px!important;transform:none}
+#properties .property-icon.note-left .property-note{top:-9px!important;bottom:auto!important;left:auto!important;right:36px!important;transform:none}
+#properties .property-icon.note-bottom .property-note{top:39px!important;bottom:auto!important;left:14px!important;transform:translateX(calc(-50% + var(--note-shift,0px)))}
 #properties .property-icon.note-right .property-note:after{top:17px;bottom:auto;left:-5px;border:0;border-left:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee}
 #properties .property-icon.note-left .property-note:after{top:17px;bottom:auto;left:auto;right:-5px;border:0;border-right:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
 #properties .property-icon.note-bottom .property-note:after{top:-5px;bottom:auto;left:calc(50% - var(--note-shift,0px) - 5px);border:0;border-left:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
@@ -2217,7 +2216,7 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
 #mapShell.expanded .property-icon .property-pin{left:1px!important;top:0!important;width:28px!important;height:28px!important;border-radius:11px 11px 11px 3px!important;transform:rotate(-45deg);border:2px solid white!important;background:#17a56c!important;box-shadow:0 3px 0 rgba(4,42,23,.10),0 5px 17px rgba(6,49,38,.35)!important;display:grid;place-items:center;color:white}
 #mapShell.expanded .property-icon.sold .property-pin{background:#3673e4!important;box-shadow:0 5px 17px rgba(14,52,133,.38)!important}
 #mapShell.expanded .property-icon .property-pin svg{width:15px;height:15px;transform:rotate(45deg)}
-#mapShell.expanded .property-icon .property-note{position:absolute!important;left:15px!important;bottom:46px!important;top:auto!important;right:auto!important;transform:translateX(-50%)!important;width:166px!important;min-height:0!important;padding:10px 12px!important;border:1px solid #c8e5d6!important;border-left:4px solid #1ba66d!important;border-radius:11px!important;background:rgba(255,255,255,.97)!important;color:#17446b!important;box-shadow:0 5px 16px rgba(14,39,71,.16)!important;overflow:visible;line-height:1.35!important;pointer-events:none}
+#mapShell.expanded .property-icon .property-note{position:absolute!important;left:15px!important;bottom:46px!important;top:auto!important;right:auto!important;transform:translateX(-50%);width:166px!important;min-height:0!important;padding:10px 12px!important;border:1px solid #c8e5d6!important;border-left:4px solid #1ba66d!important;border-radius:11px!important;background:rgba(255,255,255,.97)!important;color:#17446b!important;box-shadow:0 5px 16px rgba(14,39,71,.16)!important;overflow:visible;line-height:1.35!important;pointer-events:none}
 #mapShell.expanded .property-icon.sold .property-note{border-color:#b7cef5!important;border-left-color:#3673e4!important}
 #mapShell.expanded .property-icon .property-note:after{display:none!important}
 #mapShell.expanded .property-icon .note-title{display:block;color:#133c66;font-size:11.5px;font-weight:800;line-height:1.4;word-break:break-word}
@@ -2227,9 +2226,9 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
 #mapShell.expanded .property-icon.compact .note-title{font-size:11px!important}
 #mapShell.expanded .property-icon.compact .note-size{margin-top:3px!important;padding-top:3px!important}
 #mapShell.expanded .property-icon.selected .property-note{width:186px!important;border-width:1px!important;border-left-width:4px!important;background:#fff!important;box-shadow:0 10px 26px rgba(13,40,81,.29)!important;z-index:10}
-#mapShell.expanded .property-icon.note-right .property-note{top:-3px!important;bottom:auto!important;left:43px!important;right:auto!important;transform:none!important}
-#mapShell.expanded .property-icon.note-left .property-note{top:-3px!important;bottom:auto!important;left:auto!important;right:43px!important;transform:none!important}
-#mapShell.expanded .property-icon.note-bottom .property-note{top:43px!important;bottom:auto!important;left:15px!important;right:auto!important;transform:translateX(-50%)!important}
+#mapShell.expanded .property-icon.note-right .property-note{top:-3px!important;bottom:auto!important;left:43px!important;right:auto!important;transform:none}
+#mapShell.expanded .property-icon.note-left .property-note{top:-3px!important;bottom:auto!important;left:auto!important;right:43px!important;transform:none}
+#mapShell.expanded .property-icon.note-bottom .property-note{top:43px!important;bottom:auto!important;left:15px!important;right:auto!important;transform:translateX(-50%)}
 #mapShell.expanded .property-icon.hidden-note .property-note{visibility:hidden!important;pointer-events:none!important}
 #mapShell.expanded .property-icon:hover .property-note,#mapShell.expanded .property-icon:focus .property-note{visibility:visible!important}
 #mapShell.expanded .leaflet-bottom .leaflet-control-zoom{transform:translateY(-116px);border:1px solid rgba(226,235,246,.9)!important;border-radius:12px!important}
@@ -2268,7 +2267,7 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
 #mapShell.expanded .property-icon.sold .property-pin{background:#3974e6!important;box-shadow:0 5px 13px rgba(30,71,164,.3)!important}
 #mapShell.expanded .property-icon .property-pin svg{width:13px!important;height:13px!important;transform:rotate(45deg);stroke:#fff;stroke-width:2;fill:none}
 #mapShell.expanded .property-icon.selected .property-pin,#mapShell.expanded .property-icon:hover .property-pin,#mapShell.expanded .property-icon:focus-visible .property-pin{transform:rotate(-45deg) scale(1.12);box-shadow:0 7px 17px rgba(4,52,74,.36)!important}
-#mapShell.expanded .property-icon .property-note{box-sizing:border-box;position:absolute!important;top:auto!important;right:auto!important;bottom:39px!important;left:14px!important;display:block!important;width:130px!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:65px!important;padding:8px 9px!important;border:1px solid #d6e5ee!important;border-left:3px solid #16a374!important;border-radius:10px!important;background:rgba(255,255,255,.98)!important;color:#173e64!important;box-shadow:0 4px 15px rgba(11,44,78,.17)!important;transform:translateX(calc(-50% + var(--note-shift,0px))) translateY(0)!important;transition:width .34s cubic-bezier(.2,.75,.2,1),max-height .39s cubic-bezier(.2,.75,.2,1),padding .28s,box-shadow .3s,background .3s,transform .34s!important;overflow:visible!important;pointer-events:auto!important;cursor:pointer;z-index:1}
+#mapShell.expanded .property-icon .property-note{box-sizing:border-box;position:absolute!important;top:auto!important;right:auto!important;bottom:39px!important;left:14px!important;display:block!important;width:130px!important;max-width:none!important;height:auto!important;min-height:0!important;max-height:65px!important;padding:8px 9px!important;border:1px solid #d6e5ee!important;border-left:3px solid #16a374!important;border-radius:10px!important;background:rgba(255,255,255,.98)!important;color:#173e64!important;box-shadow:0 4px 15px rgba(11,44,78,.17)!important;transform:translateX(calc(-50% + var(--note-shift,0px))) translateY(0);transition:width .34s cubic-bezier(.2,.75,.2,1),max-height .39s cubic-bezier(.2,.75,.2,1),padding .28s,box-shadow .3s,background .3s,transform .34s!important;overflow:visible!important;pointer-events:auto!important;cursor:pointer;z-index:1}
 #mapShell.expanded .property-icon.sold .property-note{border-color:#cedef7!important;border-left-color:#3974e6!important}
 #mapShell.expanded .property-icon .property-note:after{content:""!important;display:block!important;position:absolute;left:calc(50% - var(--note-shift,0px) - 5px);bottom:-6px;width:9px;height:9px;background:inherit;border-right:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee;transform:rotate(45deg)}
 #mapShell.expanded .property-icon .note-title{font-size:10.5px!important;font-weight:800!important;line-height:1.4;color:#153960;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-height:none!important;margin:0;padding:0}
@@ -2291,9 +2290,9 @@ body.map-expanded #properties .map-shell.expanded{position:fixed!important;inset
 #mapShell.expanded .property-icon.selected .note-detail-wrap{max-height:215px;overflow-y:auto;opacity:1;visibility:visible;transition:max-height .4s cubic-bezier(.2,.75,.2,1),opacity .35s ease .08s,visibility 0s}
 #mapShell.expanded .property-icon.selected .note-route{display:block}
 #mapShell.expanded .property-icon.selected .note-close{opacity:1;visibility:visible;transition:opacity .25s ease .16s,visibility 0s}
-#mapShell.expanded .property-icon.note-right .property-note{top:-9px!important;bottom:auto!important;left:34px!important;transform:none!important}
-#mapShell.expanded .property-icon.note-left .property-note{top:-9px!important;bottom:auto!important;left:auto!important;right:36px!important;transform:none!important}
-#mapShell.expanded .property-icon.note-bottom .property-note{top:39px!important;bottom:auto!important;left:14px!important;transform:translateX(calc(-50% + var(--note-shift,0px)))!important}
+#mapShell.expanded .property-icon.note-right .property-note{top:-9px!important;bottom:auto!important;left:34px!important;transform:none}
+#mapShell.expanded .property-icon.note-left .property-note{top:-9px!important;bottom:auto!important;left:auto!important;right:36px!important;transform:none}
+#mapShell.expanded .property-icon.note-bottom .property-note{top:39px!important;bottom:auto!important;left:14px!important;transform:translateX(calc(-50% + var(--note-shift,0px)))}
 #mapShell.expanded .property-icon.note-right .property-note:after{top:17px;bottom:auto;left:-5px;border:0;border-left:1px solid #d6e5ee;border-bottom:1px solid #d6e5ee}
 #mapShell.expanded .property-icon.note-left .property-note:after{top:17px;bottom:auto;left:auto;right:-5px;border:0;border-right:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
 #mapShell.expanded .property-icon.note-bottom .property-note:after{top:-5px;bottom:auto;left:calc(50% - var(--note-shift,0px) - 5px);border:0;border-left:1px solid #d6e5ee;border-top:1px solid #d6e5ee}
@@ -2337,6 +2336,80 @@ body.map-expanded > #mapShell.expanded{display:flex!important;flex-direction:col
 <style id="zoom-position-only-fix">
 #properties .map-shell .leaflet-bottom .leaflet-control-zoom,#mapShell.expanded .leaflet-bottom .leaflet-control-zoom{transform:translateY(0)!important;margin-bottom:34px!important;margin-right:14px!important}
 #properties .map-shell .leaflet-control-zoom a,#mapShell.expanded .leaflet-control-zoom a{width:30px!important;height:30px!important;line-height:30px!important;font-size:19px!important}
+</style>
+
+<style id="note-bugfixes">
+#mapShell.expanded .property-icon{--note-accent:#119569;--note-soft:#eaf8f1;--note-border:#bce5d3;--note-ink:#126348}
+#mapShell.expanded .property-icon.sold{--note-accent:#3879df;--note-soft:#edf4ff;--note-border:#c4d9f8;--note-ink:#255ca8}
+#mapShell.expanded .property-icon .property-note{background:linear-gradient(135deg,#fff 40%,var(--note-soft))!important;border:1px solid var(--note-border)!important;border-left:3px solid var(--note-accent)!important;border-radius:11px!important;box-shadow:0 5px 15px #16334b22,0 1px 3px #16334b12!important;padding:8px 9px!important}
+#mapShell.expanded .property-icon.sold .property-note{border-color:var(--note-border)!important;border-left-color:var(--note-accent)!important}
+#mapShell.expanded .property-icon .property-note:after{background:var(--note-soft);border-color:var(--note-border)}
+#mapShell.expanded .property-icon .note-title{color:#243e51;font-weight:700!important;font-size:10.5px!important;line-height:1.45}
+#mapShell.expanded .property-icon .note-size,#mapShell.expanded .property-icon.sold .note-size{color:var(--note-ink)!important;font-size:10px!important;display:flex!important;align-items:center;gap:5px}
+#mapShell.expanded .property-icon .note-size:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--note-accent);flex-shrink:0}
+#mapShell.expanded .property-icon .property-pin,#mapShell.expanded .property-icon.sold .property-pin{background:var(--note-accent)!important;box-shadow:0 4px 12px #17466b30!important}
+#mapShell.expanded .property-icon .note-status,#mapShell.expanded .property-icon.sold .note-status{background:var(--note-soft);color:var(--note-ink);border:1px solid var(--note-border);border-radius:20px;padding:4px 10px;font-weight:650}
+#mapShell.expanded .property-icon .note-route{background:var(--note-accent);border-radius:10px;padding:11px 10px;box-shadow:0 4px 9px #194d6420}
+#mapShell.expanded .property-icon .note-route:hover{background:var(--note-ink)}
+#mapShell.expanded .property-icon .note-close{background:var(--note-soft);color:var(--note-ink);font-size:16px;border-radius:50%}
+#mapShell.expanded .property-icon .note-close:hover{background:var(--note-border)}
+#mapShell.expanded .property-icon.selected .property-note{background:linear-gradient(155deg,var(--note-soft),#fff 46%)!important;padding:15px!important;border-radius:15px!important;box-shadow:0 16px 40px #203c5530!important}
+#mapShell.expanded .property-icon.selected .note-title{font-size:14px!important;padding-right:26px;line-height:1.6}
+#mapShell.expanded .property-icon.selected .note-size{font-size:12px!important;margin:6px 0!important}
+#mapShell.expanded .property-icon .note-kv{border-bottom:1px solid #eaf0f5;padding:8px 0;color:#314c60}
+#mapShell.expanded .property-icon .note-kv strong{color:#718393;font-weight:500}
+
+/* Settle note layout once; animate only opacity and a small translation. */
+#mapShell .property-icon .property-note,
+#mapShell .property-icon .note-detail-wrap,
+#mapShell .property-icon .note-close{transition:none!important}
+#mapShell .property-icon .property-note{transform-origin:0 0}
+#mapShell .note-detail-wrap{overscroll-behavior:contain;touch-action:pan-y}
+</style>
+<style id="fullscreen-note-full-content">
+/* All expanded notes expose their full content without a scroll region. */
+#mapShell .property-icon.selected .property-note,
+#mapShell.expanded .property-icon.selected .property-note{max-height:none!important;overflow:visible!important;width:var(--fullscreen-note-width,260px)!important;transform-origin:50% 100%!important;transform:translateX(calc(-50% + var(--note-shift,0px))) scale(var(--note-fit-scale,1))!important}
+#mapShell .property-icon.selected .note-detail-wrap,
+#mapShell .property-icon.selected .note-description-full,
+#mapShell.expanded .property-icon.selected .note-detail-wrap,
+#mapShell.expanded .property-icon.selected .note-description-full{max-height:none!important;overflow:visible!important}
+</style>
+
+<style id="map-note-independent-scroll-2026">
+/* A selected sticky note is its OWN touch/trackpad scroll container.
+   No zoom/pan events from within it may reach Leaflet. */
+#mapShell .property-icon.selected .property-note,
+#mapShell.expanded .property-icon.selected .property-note{
+  width:var(--fullscreen-note-width,300px)!important;
+  max-height:var(--note-scroll-max,340px)!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y!important;
+  scrollbar-width:thin;
+  scrollbar-color:#b7ccdf transparent;
+  scroll-behavior:auto;
+  transform:translateX(calc(-50% + var(--note-shift,0px)))!important;
+}
+#mapShell .property-icon.selected .property-note::-webkit-scrollbar{width:5px}
+#mapShell .property-icon.selected .property-note::-webkit-scrollbar-thumb{background:#b7ccdf;border-radius:8px}
+#mapShell .property-icon.selected .property-note > :not(.note-close),
+#mapShell .property-icon.selected .note-detail-wrap,
+#mapShell .property-icon.selected .note-detail-wrap *{touch-action:pan-y!important}
+#mapShell .property-icon.selected .note-close,
+#mapShell .property-icon.selected .note-route{touch-action:manipulation!important}
+#mapShell .property-icon.selected .note-detail-wrap,
+#mapShell.expanded .property-icon.selected .note-detail-wrap,
+#mapShell .property-icon.selected .note-description-full,
+#mapShell.expanded .property-icon.selected .note-description-full{
+  max-height:none!important;
+  overflow:visible!important;
+}
+/* Clip-free arrow on the compact notes; when opened, don't put a triangle
+   inside the independently scrolling content. */
+#mapShell .property-icon.selected .property-note:after{display:none!important}
 </style>
 </head>
 <body>
@@ -2777,17 +2850,77 @@ function markerIcon(p){
     </span>`;
   return L.divIcon({className:'property-icon '+p.status,iconSize:[28,29],iconAnchor:[14,26],html});
 }
+// Cache dimensions until content, selection, viewport or loaded fonts change.
+const noteLayoutCache=new WeakMap();
+let noteFontRevision=0;
+// The map filters/actions float above the map. Keep the opened note entirely
+// BELOW those controls (and above the footer), in normal and fullscreen views.
+function selectedNoteSafeArea(){
+  const rect=$('map').getBoundingClientRect();
+  const gap=12;
+  const safe={left:rect.left+gap,right:rect.right-gap,top:rect.top+gap,bottom:rect.bottom-gap};
+  const toolbar=$('mapShell').querySelector('.map-toolbar');
+  if(toolbar){
+    const bar=toolbar.getBoundingClientRect();
+    if(bar.height&&bar.bottom>rect.top&&bar.top<rect.bottom){
+      safe.top=Math.max(safe.top,bar.bottom+gap);
+    }
+  }
+  const footer=$('mapShell').querySelector('.map-footer');
+  if(footer){
+    const bar=footer.getBoundingClientRect();
+    if(bar.height&&bar.width&&bar.top<rect.bottom&&bar.bottom>rect.top){
+      safe.bottom=Math.min(safe.bottom,bar.top-gap);
+    }
+  }
+  return safe;
+}
+function measureSelectedNote(note,viewport){
+  const safe=selectedNoteSafeArea();
+  const availableHeight=Math.max(50,Math.floor(safe.bottom-safe.top));
+  const availableWidth=Math.max(100,Math.floor(safe.right-safe.left));
+  const key=[viewport.x,viewport.y,state.expanded,state.lang,noteFontRevision,Math.round(safe.top),Math.round(safe.bottom)].join('|');
+  const cached=noteLayoutCache.get(note);
+  if(cached?.key===key)return cached;
+  // Limit the note to the *actual* free map space; long details scroll inside it.
+  const preferredWidth=viewport.x<=690?290:340;
+  note.style.setProperty('--note-fit-scale','1');
+  note.style.setProperty('--note-scroll-max',availableHeight+'px');
+  note.style.setProperty('--fullscreen-note-width',Math.min(preferredWidth,availableWidth)+'px');
+  const layout={key,w:note.offsetWidth,h:note.offsetHeight};
+  if(layout.w&&layout.h)noteLayoutCache.set(note,layout);
+  return layout;
+}
 function ensureSelectedNoteVisible(){
   if(!state.map||!state.selected)return;
   const entry=state.markers.get(state.selected);if(!entry)return;
-  const point=state.map.latLngToContainerPoint(entry.marker.getLatLng());
-  const viewport=state.map.getSize();
-  // Keep the expanded note below the floating toolbar (including on mobile).
-  // The compact marker can be near the top, but its expanded details need more room.
-  const noteHeight=viewport.x<=690?265:305;
-  const toolbarClearance=viewport.x<=690?87:70;
-  const desiredY=Math.min(viewport.y-42,toolbarClearance+noteHeight+37);
-  if(point.y<desiredY-5)state.map.panBy([0,point.y-desiredY],{animate:true,duration:.35});
+  const el=entry.marker.getElement(),note=el?.querySelector('.property-note');
+  if(!note||!el.classList.contains('selected'))return;
+  const previousDisplay=el.style.display;
+  el.style.display='';
+  measureSelectedNote(note,state.map.getSize());
+  const noteRect=note.getBoundingClientRect();
+  el.style.display=previousDisplay;
+  if(!noteRect.width||!noteRect.height)return;
+  const safe=selectedNoteSafeArea();
+  let dx=0,dy=0;
+  if(noteRect.left<safe.left)dx=noteRect.left-safe.left;
+  else if(noteRect.right>safe.right)dx=noteRect.right-safe.right;
+  if(noteRect.top<safe.top)dy=noteRect.top-safe.top;
+  else if(noteRect.bottom>safe.bottom)dy=noteRect.bottom-safe.bottom;
+  if(Math.abs(dx)>2||Math.abs(dy)>2){
+    state.map.panBy([dx,dy],{animate:false});
+  }
+}
+
+let noteViewportFrame=0;
+function refreshNoteViewport(){
+  cancelAnimationFrame(noteViewportFrame);
+  noteViewportFrame=requestAnimationFrame(()=>{
+    state.map?.invalidateSize({pan:false,animate:false});
+    declutter();
+    ensureSelectedNoteVisible();
+  });
 }
 function chooseStickyNote(id,fromList=false){
   state.selected=state.selected===id&&!fromList?null:id;
@@ -2797,12 +2930,12 @@ function chooseStickyNote(id,fromList=false){
 }
 
 function setMapInteractionActive(enable){
+  // In embedded mode, gesture capture is enabled only after a deliberate tap.
+  // Fullscreen always keeps Leaflet interaction enabled.
   const active=Boolean(enable||state.expanded);
   state.mapInteractionActive=active;
   $('mapShell').classList.toggle('map-interactive',active);
   if(!state.map)return;
-  // Important: disabling wheel zoom allows wheel/trackpad scrolling to reach
-  // the browser. Disabling drag allows touch scrolling to reach the browser.
   const method=active?'enable':'disable';
   state.map.dragging[method]();
   state.map.scrollWheelZoom[method]();
@@ -2812,8 +2945,8 @@ function setMapInteractionActive(enable){
 function initMap(){
   if(!window.L){$('mapEmpty').textContent=t('mapUnavailable');$('mapEmpty').hidden=false;$('fitMap').disabled=true;state.tileError=true;return}
   state.map=L.map('map',{center:CONFIG.MAP_CENTER,zoom:CONFIG.MAP_ZOOM,scrollWheelZoom:false,dragging:false,touchZoom:false,doubleClickZoom:false,zoomControl:false,minZoom:2,maxZoom:20,zoomSnap:0.5,zoomDelta:0.5,wheelPxPerZoomLevel:100});
-  // Embedded map starts passive: one-finger page scroll and wheel scrolling
-  // pass through. A deliberate tap/click activates all map gestures.
+  // After activation: one-finger map dragging and wheel zoom.
+  // Before activation: normal website scrolling; notes scroll independently.
   L.control.zoom({position:'bottomright'}).addTo(state.map);
   // Default: genuinely free, no-key OpenFreeMap vector basemap with Leaflet markers on top.
   // Do not silently retry the OSMF tile.openstreetmap.org server after a policy block.
@@ -2839,33 +2972,46 @@ function initMap(){
     }
   }catch(error){state.tileError=true;console.warn('Basemap could not initialise:',error)}
   state.map.on('move zoomend moveend resize',scheduleDeclutter);
+  state.map.on('resize',refreshNoteViewport);
   state.map.on('dragstart',()=>state.viewTouched=true);
   state.map.on('click',()=>{if(state.selected){state.selected=null;scheduleDeclutter()}});
-  // Starting a swipe on an inactive map must scroll the WEBSITE, not the map.
-  // Activate only after a short, stationary pointer/touch gesture finishes.
+  // Embedded map starts passive. An ordinary one-finger vertical swipe or
+  // wheel scroll continues scrolling the website. A deliberate tap activates
+  // map navigation, after which one finger can pan it in every direction.
   const mapElement=$('map');
+  const startsOnNote=target=>Boolean(target?.closest?.('.property-note'));
+  const startsOnControl=target=>Boolean(target?.closest?.('.leaflet-control'));
   let tapStart=null;
-  mapElement.addEventListener('pointerdown',e=>{
-    if(state.expanded||state.mapInteractionActive||e.target.closest?.('.leaflet-control'))return;
-    if(e.pointerType==='mouse'&&e.button!==0)return;
-    tapStart={id:e.pointerId,x:e.clientX,y:e.clientY,at:performance.now()};
-  },{passive:true,capture:true});
-  mapElement.addEventListener('pointerup',e=>{
-    if(!tapStart||tapStart.id!==e.pointerId)return;
-    const wasTap=Math.hypot(e.clientX-tapStart.x,e.clientY-tapStart.y)<=12&&performance.now()-tapStart.at<750;
+  const collapseForMapGesture=event=>{
+    if(!state.mapInteractionActive||startsOnNote(event.target)||startsOnControl(event.target))return;
+    if(state.selected){state.selected=null;scheduleDeclutter();}
+    state.viewTouched=true;
+  };
+  mapElement.addEventListener('wheel',collapseForMapGesture,{capture:true,passive:true});
+  mapElement.addEventListener('pointerdown',event=>{
+    if(state.expanded||state.mapInteractionActive){collapseForMapGesture(event);return;}
+    if(startsOnNote(event.target)||startsOnControl(event.target))return;
+    if(event.pointerType==='mouse'&&event.button!==0)return;
+    tapStart={id:event.pointerId,x:event.clientX,y:event.clientY,at:performance.now()};
+  },{capture:true,passive:true});
+  mapElement.addEventListener('pointerup',event=>{
+    if(!tapStart||event.pointerId!==tapStart.id)return;
+    const isTap=Math.hypot(event.clientX-tapStart.x,event.clientY-tapStart.y)<=12&&performance.now()-tapStart.at<750;
     tapStart=null;
-    if(wasTap){state.viewTouched=true;setMapInteractionActive(true)}
-  },{passive:true,capture:true});
-  mapElement.addEventListener('pointercancel',()=>{tapStart=null},{passive:true,capture:true});
-  // Desktop pointer leaving and any click/tap outside restore normal page scroll.
-  mapElement.addEventListener('pointerleave',e=>{
-    if(!state.expanded&&e.pointerType==='mouse'&&!e.buttons)setMapInteractionActive(false);
+    if(isTap){state.viewTouched=true;setMapInteractionActive(true);}
+  },{capture:true,passive:true});
+  mapElement.addEventListener('pointercancel',()=>{tapStart=null;},{capture:true,passive:true});
+  // Do not keep intercepting the rest of the website after leaving the map.
+  mapElement.addEventListener('pointerleave',event=>{
+    if(!state.expanded&&event.pointerType==='mouse'&&!event.buttons)setMapInteractionActive(false);
   },{passive:true});
-  document.addEventListener('pointerdown',e=>{
-    if(!state.expanded&&!mapElement.contains(e.target))setMapInteractionActive(false);
+  document.addEventListener('pointerdown',event=>{
+    if(!state.expanded&&!mapElement.contains(event.target))setMapInteractionActive(false);
   },{passive:true});
-  mapElement.addEventListener('keydown',e=>{
-    if(e.target===mapElement&&(e.key==='Enter'||e.key===' ')){e.preventDefault();state.viewTouched=true;setMapInteractionActive(true)}
+  mapElement.addEventListener('keydown',event=>{
+    if(event.target===mapElement&&(event.key==='Enter'||event.key===' ')){
+      event.preventDefault();state.viewTouched=true;setMapInteractionActive(true);
+    }
   });
   setMapInteractionActive(state.expanded);
   translateMapControls();
@@ -2873,7 +3019,7 @@ function initMap(){
 function translateMapControls(){[['.leaflet-control-zoom-in','zoomIn'],['.leaflet-control-zoom-out','zoomOut'],['.leaflet-popup-close-button','closePopup']].forEach(([s,k])=>all(s).forEach(el=>{el.setAttribute('aria-label',t(k));el.title=t(k)}))}
 function renderProperties(fit){
   const properties=visibleProperties(),available=properties.filter(p=>p.status==='available').length,sold=properties.length-available;
-  $('counts').innerHTML=`<span class="green">${display(available)} ${t('available')}</span><span class="count-separator" aria-hidden="true">·</span><span class="blue">${display(sold)} ${t('sold')}</span>`;
+  $('counts').innerHTML=`<span class="green">${display(available)} ${t('available')}</span>`;
   all('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.filter===state.filter)));
   $('mapHint').textContent=t('mapHint');
   $('mapEmpty').hidden=!!state.map&&properties.length>0;
@@ -2905,6 +3051,22 @@ function renderProperties(fit){
           el.dataset.stickyBound='true';
           el.addEventListener('focus',scheduleDeclutter);
           el.addEventListener('blur',scheduleDeclutter);
+          el.addEventListener('keydown',event=>{
+            if(event.target.closest('.note-close,.note-route'))event.stopPropagation();
+          });
+          const detail=el.querySelector('.note-detail-wrap');
+          // Leaflet must never take wheel, single-finger touch, or pointer-down
+          // events that BEGIN on a selected note; native note scrolling owns them.
+          const note=el.querySelector('.property-note');
+          if(note){
+            note.addEventListener('wheel',event=>event.stopPropagation(),{passive:true});
+            note.addEventListener('touchstart',event=>event.stopPropagation(),{passive:true});
+            note.addEventListener('pointerdown',event=>event.stopPropagation(),{passive:true});
+            note.addEventListener('mousedown',event=>event.stopPropagation());
+            note.addEventListener('dblclick',event=>event.stopPropagation());
+          }
+          if(detail){L.DomEvent.disableScrollPropagation(detail);L.DomEvent.disableClickPropagation(detail);}
+
         }
       }
     });
@@ -2916,10 +3078,23 @@ function renderProperties(fit){
 function renderList(properties){const sig=JSON.stringify(properties)+state.lang+'|map:'+Boolean(state.map);if($('listingGrid').dataset.signature===sig)return;$('listingGrid').dataset.signature=sig;$('listingGrid').innerHTML=properties.length?properties.map(p=>{const road=propertyText(p,'RoadWidth');return `<article class="listing"><span class="badge" style="${p.status==='available'?'background:#d9f7e8;color:#086442':''}">${t(p.status)}</span><h3>${escapeHTML(propertyText(p,'PropertyTitle'))}</h3><p>${escapeHTML(propertyText(p,'Location'))}</p><p>${t('size')}: ${escapeHTML(propertyText(p,'Size'))}</p>${road?`<p>${t('road')}: ${escapeHTML(road)}</p>`:''}${propertyText(p,'Description')?`<p class="listing-description">${escapeHTML(propertyText(p,'Description'))}</p>`:''}<div class="listing-actions">${state.map?`<button type="button" class="btn" data-show-property="${escapeHTML(p.id)}">${t('showOnMap')}</button>`:''}<a class="btn" href="${escapeHTML(propertyDirections(p))}" target="_blank" rel="noopener noreferrer">${t('navigation')}</a></div></article>`}).join(''):`<p class="listing-empty">${t('availableLocationsEmpty')}</p>`}
 let declutterFrame;
 function scheduleDeclutter(){cancelAnimationFrame(declutterFrame);declutterFrame=requestAnimationFrame(declutter)}
+const noteAnimations=new WeakMap();
+function animateStickyNote(note){
+  if(!note.isConnected||matchMedia('(prefers-reduced-motion: reduce)').matches||!note.animate)return;
+  const opening=note.closest('.property-icon').classList.contains('selected');
+  // Keep text at its final size; animate only opacity and a small vertical offset.
+  const animation=note.animate([
+    {opacity:opening?0:.25,translate:opening?'0 16px':'0 6px'},
+    {opacity:1,translate:'0 0'}
+  ],{duration:opening?420:260,easing:'cubic-bezier(.22,.61,.36,1)'});
+  noteAnimations.set(note,animation);
+  animation.onfinish=()=>{if(noteAnimations.get(note)===animation)noteAnimations.delete(note);if(opening)requestAnimationFrame(ensureSelectedNoteVisible)};
+}
 function declutter(){
   if(!state.map)return;
   const map=state.map, viewport=map.getSize(), used=[], duplicates=new Map();
   const entries=[...state.markers.values()];
+  const noteChanges=[];
   // Recompute duplicate offsets from original coordinates. Never progressively drift pins.
   for(const entry of entries){
     const p=entry.property,key=p.lat+','+p.lng,index=duplicates.get(key)||0;
@@ -2932,7 +3107,14 @@ function declutter(){
   for(const {marker,property} of entries){
     const el=marker.getElement();if(!el)continue;
     const selected=state.selected===property.id;
+    const changingNote=el.querySelector('.property-note');
+    if(changingNote&&el.classList.contains('selected')!==selected){
+      noteAnimations.get(changingNote)?.cancel();
+      noteAnimations.delete(changingNote);
+      noteChanges.push(changingNote);
+    }
     el.classList.toggle('selected',selected);
+    el.setAttribute('aria-expanded',String(selected));
     el.querySelectorAll('.note-close,.note-route').forEach(control=>{control.tabIndex=selected?0:-1});
     el.classList.remove('hidden-note','note-right','note-left','note-bottom');
     marker.setZIndexOffset(selected?2500:0);
@@ -2945,8 +3127,14 @@ function declutter(){
     el.style.display=inViewport?'':'none';
     el.style.setProperty('--note-shift','0px');
     if(!inViewport)continue;
-    const w=selected?Math.min(viewport.x-36,viewport.x<=690?260:278):(viewport.x<=690?119:130);
-    const h=selected?(viewport.x<=690?230:302):49;
+    const layout=selected?measureSelectedNote(note,viewport):null;
+    if(!selected){
+      noteLayoutCache.delete(note);
+      note.style.removeProperty('--fullscreen-note-width');
+      note.style.removeProperty('--note-fit-scale');
+    }
+    const w=layout?layout.w:(viewport.x<=690?119:130);
+    const h=layout?layout.h:49;
     const margin=8;
     const shift=Math.max(margin-(pos.x-w/2),Math.min(0,viewport.x-margin-w-(pos.x-w/2)));
     const top={x:pos.x-w/2+shift,y:pos.y-39-h,w,h,shift,name:'top'};
@@ -2967,6 +3155,7 @@ function declutter(){
       el.classList.add('hidden-note');
     }
   }
+  for(const note of noteChanges)animateStickyNote(note);
 }
 
 function fitVisible(){if(!state.map)return;const points=visibleProperties().map(p=>[p.lat,p.lng]);if(points.length)state.map.fitBounds(L.latLngBounds(points),{paddingTopLeft:[40,105],paddingBottomRight:[40,45],maxZoom:16,animate:false});else state.map.setView(CONFIG.MAP_CENTER,CONFIG.MAP_ZOOM,{animate:false})}
@@ -3060,6 +3249,7 @@ function setExpanded(on){
     requestAnimationFrame(()=>{
       state.map?.invalidateSize({pan:false,animate:false});
       scheduleDeclutter();
+      if(state.selected)requestAnimationFrame(ensureSelectedNoteVisible);
     });
   });
 }
@@ -3078,7 +3268,14 @@ function setupScrollTransitions(){
 
 function setupPropertyMapEnhancements(){
 
- if(window.ResizeObserver){new ResizeObserver(()=>state.map?.invalidateSize({pan:false})).observe($('map'));}
+ if(window.ResizeObserver){new ResizeObserver(refreshNoteViewport).observe($('map'));}
+ window.addEventListener('orientationchange',refreshNoteViewport);
+ window.visualViewport?.addEventListener('resize',refreshNoteViewport);
+ if(document.fonts){
+   const fontsChanged=()=>{noteFontRevision++;refreshNoteViewport();};
+   document.fonts.ready.then(fontsChanged);
+   document.fonts.addEventListener?.('loadingdone',fontsChanged);
+ }
  let queued=false;
  function progress(){queued=false;const distance=document.documentElement.scrollHeight-innerHeight;$('scrollProgress').style.transform='scaleX('+(distance>0?scrollY/distance:0)+')';}
  addEventListener('scroll',()=>{if(!queued){queued=true;requestAnimationFrame(progress)}},{passive:true});progress();
