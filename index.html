@@ -216,7 +216,7 @@ const TEXT = {
     soldOnly: 'Sold out',
     available: 'Available',
     sold: 'Sold',
-    mapHint: 'Select a pin for property details. Zoom in to see street names.',
+    mapHint: 'Select a pin for property details.',
     noProperties: 'No properties match this filter.',
     listView: 'Available property',
     location: 'Location',
@@ -404,7 +404,7 @@ const TEXT = {
     soldOnly: "বিক্রিত সম্পত্তি",
     available: "বিক্রয়যোগ্য",
     sold: "বিক্রিত",
-    mapHint: "সম্পত্তির বিস্তারিত জানতে পিন নির্বাচন করুন। রাস্তার নাম দেখতে মানচিত্র বড় করুন।",
+    mapHint: "সম্পত্তির বিস্তারিত জানতে পিন নির্বাচন করুন।",
     noProperties: "নির্বাচিত শর্ত অনুযায়ী কোনো সম্পত্তি পাওয়া যায়নি।",
     listView: "বিক্রয়যোগ্য সম্পত্তি",
     location: "অবস্থান",
@@ -2979,7 +2979,7 @@ function initMap(){
   // wheel scroll continues scrolling the website. A deliberate tap activates
   // map navigation, after which one finger can pan it in every direction.
   const mapElement=$('map');
-  const startsOnNote=target=>Boolean(target?.closest?.('.property-note'));
+  const startsOnNote=target=>Boolean(target?.closest?.('.property-icon'));
   const startsOnControl=target=>Boolean(target?.closest?.('.leaflet-control'));
   let tapStart=null;
   const collapseForMapGesture=event=>{
@@ -3054,18 +3054,24 @@ function renderProperties(fit){
           el.addEventListener('keydown',event=>{
             if(event.target.closest('.note-close,.note-route'))event.stopPropagation();
           });
-          const detail=el.querySelector('.note-detail-wrap');
-          // Leaflet must never take wheel, single-finger touch, or pointer-down
-          // events that BEGIN on a selected note; native note scrolling owns them.
-          const note=el.querySelector('.property-note');
-          if(note){
-            note.addEventListener('wheel',event=>event.stopPropagation(),{passive:true});
-            note.addEventListener('touchstart',event=>event.stopPropagation(),{passive:true});
-            note.addEventListener('pointerdown',event=>event.stopPropagation(),{passive:true});
-            note.addEventListener('mousedown',event=>event.stopPropagation());
-            note.addEventListener('dblclick',event=>event.stopPropagation());
-          }
-          if(detail){L.DomEvent.disableScrollPropagation(detail);L.DomEvent.disableClickPropagation(detail);}
+          // Handle native clicks here instead of Leaflet's map-level dispatcher.
+          // A previous map drag leaves Leaflet's moved flag set when note
+          // pointer-down is stopped, so its dispatcher can discard a valid click.
+          // Delegate to the marker element: setIcon may replace its children
+          // while reusing the same element during data/language refreshes.
+          el.addEventListener('click',event=>{
+            event.stopPropagation();
+            if(event.target.closest('.note-route'))return;
+            if(event.target.closest('.note-close')){
+              state.selected=null;scheduleDeclutter();return;
+            }
+            if(event.target.closest('.note-detail-wrap'))return;
+            chooseStickyNote(p.id);
+          });
+          // Native scrolling and link/button defaults remain enabled.
+          ['wheel','touchstart','pointerdown','mousedown','dblclick'].forEach(type=>{
+            el.addEventListener(type,event=>event.stopPropagation(),{passive:true});
+          });
 
         }
       }
